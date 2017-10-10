@@ -1,9 +1,3 @@
-.authorization-content-wrap {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); }
-
 .fade {
   opacity: 0;
   -webkit-transition: opacity 0.15s linear;
@@ -41,30 +35,34 @@ tbody.collapse.in {
     transform: rotate(360deg); } }
 
 .authorization-form {
-  padding: 32px 16px 22px;
+  padding: 0 16px 22px;
   overflow: hidden; }
   .authorization-form .buttons-group {
     margin-top: 32px; }
-  .authorization-form.example-enter.example-enter-active {
+  .authorization-form.authorization-enter.authorization-enter-active {
     max-height: 500px;
-    padding: 32px 16px 22px;
+    padding: 0 16px 22px;
     opacity: 1;
     transition: all 500ms ease-in; }
-  .authorization-form.example-enter {
+  .authorization-form.authorization-enter {
     max-height: 0;
     padding: 0;
     opacity: 0; }
-  .authorization-form.example-leave {
-    padding: 32px 16px 22px;
+  .authorization-form.authorization-leave {
+    padding: 0 16px 22px;
     max-height: 500px;
     opacity: 1; }
-  .authorization-form.example-leave.example-leave-active {
+  .authorization-form.authorization-leave.authorization-leave-active {
     max-height: 0;
     padding: 0;
     opacity: 0;
     transition: all 500ms ease-in; }
 
 .authorization-content-wrap {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
   box-shadow: 5px 12px 20px rgba(36, 37, 38, 0.3);
   border-radius: 16px;
   display: inline-block;

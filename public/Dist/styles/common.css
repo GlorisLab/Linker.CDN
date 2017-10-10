@@ -148,7 +148,7 @@ input:focus ~ label .material-icons,
   height: 34px;
   margin-bottom: 0;
   padding: 0 20px;
-  border: 1px solid transparent;
+  border: 1px solid;
   border-radius: 26px;
   background-image: none;
   text-align: center;
@@ -219,6 +219,51 @@ input[type="button"].btn-block {
   .btn-lg {
     height: 34px;
     line-height: 34px; } }
+
+.bubble {
+  animation: bubble 0.25s 0.25s ease 2; }
+
+@keyframes bubble {
+  0% {
+    transform: scale(1, 1); }
+  50% {
+    transform: scale(0.95, 0.95); }
+  100% {
+    transform: scale(1, 1); } }
+
+.spinning-loader {
+  width: 40px;
+  min-width: 0;
+  vertical-align: middle;
+  cursor: progress;
+  border-radius: 50% !important;
+  border: 2px solid rgba(0, 0, 0, 0.25) !important;
+  padding: 0;
+  border-left-color: #ec407a !important;
+  background: transparent;
+  transform: rotate(0deg);
+  color: white !important;
+  animation: spinning 1s 0.25s linear infinite; }
+  .spinning-loader :only-child {
+    display: none; }
+  .spinning-loader:hover, .spinning-loader:focus, .spinning-loader:active {
+    background-color: transparent !important; }
+
+@keyframes spinning {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
+.error-status {
+  background: #e53935; }
+  .error-status::after {
+    font-family: "Material Icons";
+    content: "clear";
+    text-transform: none;
+    font-size: 24px; }
+  .error-status :only-child {
+    display: none; }
 
 .tooltip {
   position: absolute;
