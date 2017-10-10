@@ -16645,39 +16645,29 @@ var AuthorizationLayout = function (_Component) {
           _react2.default.createElement(
             _Controls.Button,
             { bsStyle: 'primary', className: 'toggled-view', onClick: this.onToggleView },
-            isSignIn ? _react2.default.createElement(
-              'div',
+            isSignIn ? [_react2.default.createElement(
+              'i',
+              { className: 'material-icons' },
+              'person_add'
+            ), _react2.default.createElement(
+              'span',
               null,
-              _react2.default.createElement(
-                'i',
-                { className: 'material-icons' },
-                'person_add'
-              ),
-              _react2.default.createElement(
-                'span',
-                null,
-                'Registration'
-              )
-            ) : _react2.default.createElement(
-              'div',
+              'Registration'
+            )] : [_react2.default.createElement(
+              'i',
+              { className: 'material-icons' },
+              'person'
+            ), _react2.default.createElement(
+              'span',
               null,
-              _react2.default.createElement(
-                'i',
-                { className: 'material-icons' },
-                'person'
-              ),
-              _react2.default.createElement(
-                'span',
-                null,
-                'Sign in'
-              )
-            )
+              'Sign in'
+            )]
           ),
           _react2.default.createElement(
             _reactAddonsCssTransitionGroup2.default,
             {
               transitionName: 'authorization',
-              transitionEnterTimeout: 500,
+              transitionEnterTimeout: 700,
               transitionLeaveTimeout: 500
             },
             isSignIn && _react2.default.createElement(_SignIn2.default, null),
@@ -33924,7 +33914,7 @@ var SignIn = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'authorization-form' },
+        { className: 'authorization-form sign-in-form' },
         _react2.default.createElement(_SigInForm2.default, _extends({}, this.props, {
           onSubmit: this.signIn
         }))
@@ -34433,7 +34423,7 @@ var SignIn = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'authorization-form' },
+        { className: 'authorization-form registration-form' },
         _react2.default.createElement(_RegistrationForm2.default, _extends({}, this.props, {
           onSubmit: this.registration
         }))
