@@ -1,3 +1,19 @@
+.authorization-form .buttons-group .btn.active, .authorization-form .buttons-group .btn:active, .authorization-form .buttons-group .btn:active:focus {
+  overflow: hidden; }
+  .authorization-form .buttons-group .btn.active::before, .authorization-form .buttons-group .btn:active::before, .authorization-form .buttons-group .btn:focus:active::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    background: white;
+    width: 50px;
+    height: 50px;
+    content: "";
+    display: block;
+    border-radius: 50%;
+    -webkit-backface-visibility: hidden;
+    animation: wave-animate 0.7s forwards  ease-out; }
+
 .fade {
   opacity: 0;
   -webkit-transition: opacity 0.15s linear;
@@ -34,49 +50,43 @@ tbody.collapse.in {
   100% {
     transform: rotate(360deg); } }
 
+@keyframes wave-animate {
+  0% {
+    transform: scale(0);
+    opacity: 1; }
+  100% {
+    transform: scale(3);
+    opacity: 0; } }
+
+@keyframes spinning {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
 .authorization-form {
   padding: 0 16px 22px;
   overflow: hidden; }
   .authorization-form .buttons-group {
     margin-top: 32px; }
-
-.registration-form.authorization-enter.authorization-enter-active {
-  height: 286px;
-  opacity: 1;
-  transition: all 500ms linear 200ms; }
-
-.registration-form.authorization-enter {
-  height: 222px;
-  opacity: 0; }
-
-.registration-form.authorization-leave {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  opacity: 1; }
-
-.registration-form.authorization-leave.authorization-leave-active {
-  opacity: 0;
-  transition: all 500ms linear; }
-
-.sign-in-form.authorization-enter.authorization-enter-active {
-  height: 222px;
-  opacity: 1;
-  transition: all 500ms linear 200ms; }
-
-.sign-in-form.authorization-enter {
-  height: 286px;
-  opacity: 0; }
-
-.sign-in-form.authorization-leave {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  opacity: 1; }
-
-.sign-in-form.authorization-leave.authorization-leave-active {
-  opacity: 0;
-  transition: all 500ms linear; }
+  .authorization-form.authorization-enter.authorization-enter-active {
+    opacity: 1;
+    max-height: 400px;
+    padding: 0 16px 22px;
+    transition: all 400ms linear; }
+  .authorization-form.authorization-enter {
+    max-height: 0;
+    padding: 0;
+    opacity: 0; }
+  .authorization-form.authorization-leave {
+    max-height: 400px;
+    padding: 0 16px 22px;
+    opacity: 1; }
+  .authorization-form.authorization-leave.authorization-leave-active {
+    opacity: 0;
+    padding: 0;
+    max-height: 0;
+    transition: all 300ms linear; }
 
 .authorization-content-wrap {
   position: absolute;
@@ -91,6 +101,7 @@ tbody.collapse.in {
   .authorization-content-wrap .toggled-view {
     display: flex;
     align-items: center;
+    box-shadow: 3px 3px 3px rgba(36, 37, 38, 0.2);
     justify-content: space-between;
     width: 40px;
     min-width: 0;
@@ -103,6 +114,10 @@ tbody.collapse.in {
     z-index: 2;
     overflow: hidden;
     transition: width 500ms ease-in; }
+    .authorization-content-wrap .toggled-view:hover {
+      box-shadow: 3px 3px 3px rgba(36, 37, 38, 0.2); }
+    .authorization-content-wrap .toggled-view.active, .authorization-content-wrap .toggled-view:active, .authorization-content-wrap .toggled-view:active:focus {
+      box-shadow: 5px 5px 3px rgba(36, 37, 38, 0.2); }
     .authorization-content-wrap .toggled-view .material-icons {
       line-height: 24px;
       font-size: 24px;
