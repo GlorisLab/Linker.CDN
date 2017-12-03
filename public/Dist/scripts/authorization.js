@@ -460,7 +460,7 @@ var SignInReducer = function () {
       return {
         message: '',
         errors: '',
-        status: _StatusConstants.STATUS_ERROR
+        status: _StatusConstants.STATUS_DEFAULT
       };
     }
   }]);
