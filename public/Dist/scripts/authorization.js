@@ -25,10 +25,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = __webpack_require__(13);
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _realt = __webpack_require__(24);
 
 var _WindowService = __webpack_require__(364);
@@ -65,7 +61,7 @@ var AccountSignInActions = function () {
         _AccountSource2.default.signIn(query).loading(function (result) {
           return dispatch(_this.signInCallback(result));
         }).then(function (result) {
-          _SessionService2.default.signIn(result.response);
+          _SessionService2.default.signIn(result.response.token);
           dispatch(_this.signInCallback(result));
 
           setTimeout(function () {
@@ -300,7 +296,7 @@ var AccountRegistrationActions = function () {
         _AccountSource2.default.registration(query).loading(function (result) {
           return dispatch(_this.registrationCallback(result));
         }).then(function (result) {
-          _SessionService2.default.signIn(result.response);
+          _SessionService2.default.signIn(result.response.token);
           dispatch(_this.registrationCallback(result));
 
           setTimeout(function () {
@@ -464,7 +460,7 @@ var SignInReducer = function () {
       return {
         message: '',
         errors: '',
-        status: _StatusConstants.STATUS_DEFAULT
+        status: _StatusConstants.STATUS_ERROR
       };
     }
   }]);
@@ -558,7 +554,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(84);
+var _reactAddonsCssTransitionGroup = __webpack_require__(85);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
@@ -616,7 +612,7 @@ var AuthorizationLayout = function (_Component) {
             { bsStyle: 'primary', className: 'toggled-view', onClick: this.onToggleView },
             isSignIn ? [_react2.default.createElement(
               'i',
-              { className: 'material-icons' },
+              { className: 'material-icons', key: 'reqistration' },
               'person_add'
             ), _react2.default.createElement(
               'span',
@@ -624,7 +620,7 @@ var AuthorizationLayout = function (_Component) {
               'Registration'
             )] : [_react2.default.createElement(
               'i',
-              { className: 'material-icons' },
+              { className: 'material-icons', key: 'signIn' },
               'person'
             ), _react2.default.createElement(
               'span',
