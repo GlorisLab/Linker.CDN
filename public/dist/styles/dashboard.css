@@ -59,7 +59,7 @@ tbody.collapse.in {
   background: white;
   box-shadow: 0 5px 20px rgba(36, 37, 38, 0.3);
   display: flex;
-  justify-content: flex-end; }
+  justify-content: space-between; }
 
 .user-info {
   position: relative;

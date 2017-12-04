@@ -84454,9 +84454,18 @@ var ControlsSearchInput = function (_Component) {
   }
 
   _createClass(ControlsSearchInput, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(_ref) {
+      var value = _ref.value;
+      var prevValue = this.props.value;
+
+
+      if (value !== prevValue && value !== this.state.value) this.setState({ value: value });
+    }
+  }, {
     key: 'onChange',
-    value: function onChange(_ref) {
-      var value = _ref.target.value;
+    value: function onChange(_ref2) {
+      var value = _ref2.target.value;
 
       this.setState({ value: value });
 
@@ -84513,6 +84522,7 @@ ControlsSearchInput.propTypes = {
   placeholder: _propTypes2.default.string,
   searchLabel: _propTypes2.default.string,
   className: _propTypes2.default.string,
+  value: _propTypes2.default.string,
   onChange: _propTypes2.default.func
 };
 

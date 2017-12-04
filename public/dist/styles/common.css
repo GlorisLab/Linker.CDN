@@ -689,6 +689,14 @@ input[type="button"].btn-block {
 .btn-group.dropdown.open .dropdown-toggle {
   box-shadow: none; }
 
+.search-input {
+  width: 330px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .search-input .btn {
+    margin-left: 10px; }
+
 .overlay-status {
   height: 100%;
   z-index: 100; }

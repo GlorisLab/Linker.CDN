@@ -329,22 +329,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AccountRegistrationActions = function () {
-  function AccountRegistrationActions() {
-    _classCallCheck(this, AccountRegistrationActions);
+var DashboardUserActions = function () {
+  function DashboardUserActions() {
+    _classCallCheck(this, DashboardUserActions);
   }
 
-  _createClass(AccountRegistrationActions, [{
+  _createClass(DashboardUserActions, [{
     key: 'userGet',
     value: function userGet() {
       return _UserSource2.default.getUser();
     }
   }]);
 
-  return AccountRegistrationActions;
+  return DashboardUserActions;
 }();
 
-exports.default = (0, _realt.createActions)(AccountRegistrationActions);
+exports.default = (0, _realt.createActions)(DashboardUserActions);
 
 /***/ }),
 
@@ -808,10 +808,15 @@ var _UserReducer = __webpack_require__(694);
 
 var _UserReducer2 = _interopRequireDefault(_UserReducer);
 
+var _SearcherReducer = __webpack_require__(949);
+
+var _SearcherReducer2 = _interopRequireDefault(_SearcherReducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = {
-  user: _UserReducer2.default
+  user: _UserReducer2.default,
+  searcher: _SearcherReducer2.default
 };
 
 exports.default = rootReducer;
@@ -848,14 +853,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var SignInReducer = function () {
-  function SignInReducer() {
-    _classCallCheck(this, SignInReducer);
+var DashboardUserReducer = function () {
+  function DashboardUserReducer() {
+    _classCallCheck(this, DashboardUserReducer);
 
     this.bindAction(_UserActions2.default.userGet, this.handleUserGet);
   }
 
-  _createClass(SignInReducer, [{
+  _createClass(DashboardUserReducer, [{
     key: 'handleUserGet',
     value: function handleUserGet(state, _ref) {
       var status = _ref.status,
@@ -876,10 +881,10 @@ var SignInReducer = function () {
     }
   }]);
 
-  return SignInReducer;
+  return DashboardUserReducer;
 }();
 
-exports.default = (0, _realt.createReducer)(SignInReducer);
+exports.default = (0, _realt.createReducer)(DashboardUserReducer);
 
 /***/ }),
 
@@ -1545,6 +1550,10 @@ var _ConnectDecorators = __webpack_require__(39);
 
 var _Controls = __webpack_require__(13);
 
+var _Searcher = __webpack_require__(948);
+
+var _Searcher2 = _interopRequireDefault(_Searcher);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1578,6 +1587,7 @@ var DashboardHeader = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'dashboard-header' },
+        _react2.default.createElement(_Searcher2.default, null),
         _react2.default.createElement(
           'div',
           { className: 'user-info' },
@@ -1689,7 +1699,7 @@ var DashboardPagesAlbumsView = function (_Component) {
     };
     _this.onAlbumOpen = function (id, name) {
       return function () {
-        return _this.props.history.push('/Dashboard.html/Links/' + id + '/' + name);
+        return _this.props.history.push('/Dashboard/Links/' + id + '/' + name);
       };
     };
     _this.onAlbumDelete = function (id) {
@@ -1721,25 +1731,29 @@ var DashboardPagesAlbumsView = function (_Component) {
     value: function componentWillReceiveProps(_ref) {
       var _ref$filter = _ref.filter,
           offset = _ref$filter.offset,
-          search = _ref$filter.search,
-          limit = _ref$filter.limit;
-      var _props$filter = this.props.filter,
-          prevOffset = _props$filter.offset,
-          prevSearch = _props$filter.search;
+          limit = _ref$filter.limit,
+          searcherValue = _ref.searcherValue;
+      var _props = this.props,
+          prevOffset = _props.filter.offset,
+          prevSearcherValue = _props.searcherValue;
 
 
-      if (prevOffset !== offset || search !== prevSearch) this.dataFetch({ search: search, offset: offset, limit: limit });
+      if (prevOffset !== offset) this.dataFetch({ searcherValue: searcherValue, offset: offset, limit: limit });
+      if (searcherValue !== prevSearcherValue) {
+        this.onFilterChange({ offset: 0 });
+        this.dataFetch({ searcherValue: searcherValue, offset: 0, limit: limit });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props,
-          data = _props.data,
-          contentStatus = _props.contentStatus,
-          status = _props.status,
-          editingAlbum = _props.editingAlbum;
+      var _props2 = this.props,
+          data = _props2.data,
+          contentStatus = _props2.contentStatus,
+          status = _props2.status,
+          editingAlbum = _props2.editingAlbum;
 
 
       return _react2.default.createElement(
@@ -1791,6 +1805,7 @@ DashboardPagesAlbumsView.propTypes = {
   filter: _propTypes2.default.object,
   editingAlbum: _propTypes2.default.string,
   userId: _propTypes2.default.string,
+  searcherValue: _propTypes2.default.string,
   status: _propTypes2.default.string,
   contentStatus: _propTypes2.default.string,
   data: _propTypes2.default.array
@@ -1798,8 +1813,10 @@ DashboardPagesAlbumsView.propTypes = {
 
 var mapStateToProps = function mapStateToProps(_ref3) {
   var albums = _ref3.albums,
-      user = _ref3.user;
+      user = _ref3.user,
+      searcher = _ref3.searcher;
   return _extends({}, albums, {
+    searcherValue: searcher.value,
     userId: user['_id']
   });
 };
@@ -2612,6 +2629,157 @@ exports.default = (0, _ConnectDecorators.connectToStore)({ name: 'user', actions
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 948:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _ConnectDecorators = __webpack_require__(39);
+
+var _Controls = __webpack_require__(13);
+
+var _SearcherActions = __webpack_require__(950);
+
+var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DashboardHeader = function (_Component) {
+  _inherits(DashboardHeader, _Component);
+
+  function DashboardHeader() {
+    _classCallCheck(this, DashboardHeader);
+
+    var _this = _possibleConstructorReturn(this, (DashboardHeader.__proto__ || Object.getPrototypeOf(DashboardHeader)).call(this));
+
+    _this.onValueChange = function (value) {
+      return _this.props.actions.changeValue(value);
+    };
+    return _this;
+  }
+
+  _createClass(DashboardHeader, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_Controls.SearchInput, { onChange: this.onValueChange, value: this.props.value });
+    }
+  }]);
+
+  return DashboardHeader;
+}(_react.Component);
+
+DashboardHeader.propTypes = {
+  value: _propTypes2.default.string,
+  actions: _propTypes2.default.object
+};
+
+exports.default = (0, _ConnectDecorators.connectToStore)({ name: 'searcher', actions: _SearcherActions2.default })(DashboardHeader);
+
+/***/ }),
+
+/***/ 949:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _realt = __webpack_require__(24);
+
+var _lodash = __webpack_require__(16);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _SearcherActions = __webpack_require__(950);
+
+var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DashboardSearcherReducer = function () {
+  function DashboardSearcherReducer() {
+    _classCallCheck(this, DashboardSearcherReducer);
+
+    this.bindAction(_SearcherActions2.default.changeValue, this.handleChangeValue);
+    this.bindAction(_SearcherActions2.default.reset, this.handleReset);
+  }
+
+  _createClass(DashboardSearcherReducer, [{
+    key: 'handleChangeValue',
+    value: function handleChangeValue(state, value) {
+      return _lodash2.default.assign({}, state, { value: value });
+    }
+  }, {
+    key: 'handleReset',
+    value: function handleReset(state) {
+      return _lodash2.default.assign({}, state, { value: '' });
+    }
+  }, {
+    key: 'initialState',
+    get: function get() {
+      return { value: '' };
+    }
+  }]);
+
+  return DashboardSearcherReducer;
+}();
+
+exports.default = (0, _realt.createReducer)(DashboardSearcherReducer);
+
+/***/ }),
+
+/***/ 950:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _realt = __webpack_require__(24);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DashboardSearcherActions = function DashboardSearcherActions() {
+  _classCallCheck(this, DashboardSearcherActions);
+
+  this.generate('changeValue', 'reset');
+};
+
+exports.default = (0, _realt.createActions)(DashboardSearcherActions);
 
 /***/ })
 
