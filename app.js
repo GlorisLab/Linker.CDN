@@ -1,11 +1,20 @@
 'use strict'
 
-var path = require('path')
-var express = require('express')
-var serveStatic = require('serve-static')
+const path = require('path')
+const express = require('express')
+const serveStatic = require('serve-static')
 
-var app = express()
+const app = express()
 
-app.use(serveStatic(path.join(__dirname, 'public')))
+app.use('/contents', serveStatic(path.join(__dirname, 'public')))
 
-app.listen(3000, () => console.info('App listen on 3000'))
+app.get('/dashboard', dashboardRoute)
+app.get('/dashboard/*', dashboardRoute)
+
+function dashboardRoute(req, res) {
+	res.sendFile('/public/dashboard.html', { root: __dirname });
+}
+
+app.get('*', (req, res) => res.sendFile('/public/index.html', { root: __dirname }))
+
+app.listen(8080, () => console.info('App listen on 8080'))
