@@ -16,11 +16,11 @@ var _realt = __webpack_require__(24);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _AlbumsSource = __webpack_require__(180);
+var _AlbumsSource = __webpack_require__(179);
 
 var _AlbumsSource2 = _interopRequireDefault(_AlbumsSource);
 
-var _ViewActions = __webpack_require__(179);
+var _ViewActions = __webpack_require__(178);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
@@ -75,48 +75,7 @@ exports.default = (0, _realt.createActions)(DashboardPagesAlbumsActionsEdit);
 
 /***/ }),
 
-/***/ 177:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _realt = __webpack_require__(24);
-
-var _UserSource = __webpack_require__(710);
-
-var _UserSource2 = _interopRequireDefault(_UserSource);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AccountRegistrationActions = function () {
-  function AccountRegistrationActions() {
-    _classCallCheck(this, AccountRegistrationActions);
-  }
-
-  _createClass(AccountRegistrationActions, [{
-    key: 'userGet',
-    value: function userGet() {
-      return _UserSource2.default.getUser();
-    }
-  }]);
-
-  return AccountRegistrationActions;
-}();
-
-exports.default = (0, _realt.createActions)(AccountRegistrationActions);
-
-/***/ }),
-
-/***/ 179:
+/***/ 178:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -134,7 +93,7 @@ var _EditFormActions = __webpack_require__(117);
 
 var _EditFormActions2 = _interopRequireDefault(_EditFormActions);
 
-var _AlbumsSource = __webpack_require__(180);
+var _AlbumsSource = __webpack_require__(179);
 
 var _AlbumsSource2 = _interopRequireDefault(_AlbumsSource);
 
@@ -146,7 +105,7 @@ var DashboardPagesAlbumsActionsView = function () {
   function DashboardPagesAlbumsActionsView() {
     _classCallCheck(this, DashboardPagesAlbumsActionsView);
 
-    this.generate('editingAlbumSelect');
+    this.generate('editingAlbumSelect', 'filterChange');
   }
 
   _createClass(DashboardPagesAlbumsActionsView, [{
@@ -169,6 +128,11 @@ var DashboardPagesAlbumsActionsView = function () {
     value: function albumDelete(id) {
       return _AlbumsSource2.default.deleteAlbum(id);
     }
+  }, {
+    key: 'albumTypeToggle',
+    value: function albumTypeToggle(id, type) {
+      return _AlbumsSource2.default.changeAlbumType(id, type);
+    }
   }]);
 
   return DashboardPagesAlbumsActionsView;
@@ -178,7 +142,7 @@ exports.default = (0, _realt.createActions)(DashboardPagesAlbumsActionsView);
 
 /***/ }),
 
-/***/ 180:
+/***/ 179:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -206,6 +170,9 @@ exports.default = {
   editAlbum: function editAlbum(query) {
     return _AjaxService2.default.postRequest(_UrlConstants.ALBUM_URL + 'edit/' + query.id, query);
   },
+  changeAlbumType: function changeAlbumType(id, type) {
+    return _AjaxService2.default.getRequest(_UrlConstants.ALBUM_URL + 'changeType/' + id + '/' + type, null, { id: id, type: type });
+  },
   deleteAlbum: function deleteAlbum(id) {
     console.log('TODO DO API');
     // return AjaxService.postRequest(`${ALBUM_URL}edit/${query.id}`, query);
@@ -214,7 +181,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 181:
+/***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -230,7 +197,7 @@ var _realt = __webpack_require__(24);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _AlbumsSource = __webpack_require__(180);
+var _AlbumsSource = __webpack_require__(179);
 
 var _AlbumsSource2 = _interopRequireDefault(_AlbumsSource);
 
@@ -242,7 +209,7 @@ var DashboardPagesAlbumsActionsCreate = function () {
   function DashboardPagesAlbumsActionsCreate() {
     _classCallCheck(this, DashboardPagesAlbumsActionsCreate);
 
-    this.generate('albumCreateCallback');
+    this.generate('albumCreateCallback', 'formReset');
   }
 
   _createClass(DashboardPagesAlbumsActionsCreate, [{
@@ -277,7 +244,7 @@ exports.default = (0, _realt.createActions)(DashboardPagesAlbumsActionsCreate);
 
 /***/ }),
 
-/***/ 182:
+/***/ 181:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -293,7 +260,7 @@ var _realt = __webpack_require__(24);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _LinksSource = __webpack_require__(311);
+var _LinksSource = __webpack_require__(313);
 
 var _LinksSource2 = _interopRequireDefault(_LinksSource);
 
@@ -340,7 +307,48 @@ exports.default = (0, _realt.createActions)(DashboardPagesLinksActionsCreate);
 
 /***/ }),
 
-/***/ 309:
+/***/ 304:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _realt = __webpack_require__(24);
+
+var _UserSource = __webpack_require__(710);
+
+var _UserSource2 = _interopRequireDefault(_UserSource);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AccountRegistrationActions = function () {
+  function AccountRegistrationActions() {
+    _classCallCheck(this, AccountRegistrationActions);
+  }
+
+  _createClass(AccountRegistrationActions, [{
+    key: 'userGet',
+    value: function userGet() {
+      return _UserSource2.default.getUser();
+    }
+  }]);
+
+  return AccountRegistrationActions;
+}();
+
+exports.default = (0, _realt.createActions)(AccountRegistrationActions);
+
+/***/ }),
+
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 var invariant = __webpack_require__(19);
@@ -602,7 +610,7 @@ function invariantMapOrSet(target, command) {
 
 /***/ }),
 
-/***/ 310:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -616,7 +624,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _LinksSource = __webpack_require__(311);
+var _LinksSource = __webpack_require__(313);
 
 var _LinksSource2 = _interopRequireDefault(_LinksSource);
 
@@ -643,7 +651,7 @@ exports.default = (0, _realt.createActions)(DashboardPagesLinksActionsView);
 
 /***/ }),
 
-/***/ 311:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -672,7 +680,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 362:
+/***/ 364:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -725,7 +733,7 @@ exports.default = DashboardPagesAlbumsCreateForm;
 "use strict";
 
 
-var _AppService = __webpack_require__(214);
+var _AppService = __webpack_require__(215);
 
 var _AppService2 = _interopRequireDefault(_AppService);
 
@@ -826,13 +834,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _UserActions = __webpack_require__(177);
+var _UserActions = __webpack_require__(304);
 
 var _UserActions2 = _interopRequireDefault(_UserActions);
 
@@ -945,25 +953,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _immutabilityHelper = __webpack_require__(309);
+var _immutabilityHelper = __webpack_require__(311);
 
 var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _ViewActions = __webpack_require__(179);
+var _ViewActions = __webpack_require__(178);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
-var _CreateFormActions = __webpack_require__(181);
+var _CreateFormActions = __webpack_require__(180);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
@@ -975,6 +985,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DashboardPagesAlbumsViewReducer = function () {
@@ -983,6 +995,8 @@ var DashboardPagesAlbumsViewReducer = function () {
 
     this.bindAction(_ViewActions2.default.albumsGet, this.handleAlbumsGet);
     this.bindAction(_ViewActions2.default.editingAlbumSelect, this.handleEditingAlbumSelect);
+    this.bindAction(_ViewActions2.default.albumTypeToggle, this.handleAlbumTypeToggle);
+    this.bindAction(_ViewActions2.default.filterChange, this.handleFilterChange);
     this.bindAction(_CreateFormActions2.default.albumCreateCallback, this.handleAlbumCreate);
     this.bindAction(_EditFormActions2.default.albumEditCallback, this.handleAlbumEdit);
   }
@@ -996,7 +1010,9 @@ var DashboardPagesAlbumsViewReducer = function () {
 
       if (!isSuccess) return _lodash2.default.assign({}, state, { status: status });
 
-      return (0, _immutabilityHelper2.default)(state, { $merge: { status: _StatusConstants.STATUS_DEFAULT, data: response } });
+      if (state.filter.offset !== 0) return (0, _immutabilityHelper2.default)(state, { $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response)) } });
+
+      return (0, _immutabilityHelper2.default)(state, { $merge: { contentStatus: _StatusConstants.STATUS_DEFAULT, status: _StatusConstants.STATUS_DEFAULT, data: response } });
     }
   }, {
     key: 'handleEditingAlbumSelect',
@@ -1016,16 +1032,44 @@ var DashboardPagesAlbumsViewReducer = function () {
       });
     }
   }, {
-    key: 'handleAlbumEdit',
-    value: function handleAlbumEdit(state, _ref3) {
+    key: 'handleFilterChange',
+    value: function handleFilterChange(state, filter) {
+      return (0, _immutabilityHelper2.default)(state, {
+        filter: { $merge: _extends({}, filter) }
+      });
+    }
+  }, {
+    key: 'handleAlbumTypeToggle',
+    value: function handleAlbumTypeToggle(state, _ref3) {
       var isSuccess = _ref3.isSuccess,
-          response = _ref3.response,
-          query = _ref3.query;
+          data = _ref3.data;
 
       if (!isSuccess) return state;
 
       var index = _lodash2.default.findIndex(state.data, function (_ref4) {
         var _id = _ref4._id;
+        return data.id === _id;
+      });
+
+      if (index < 0) return state;
+
+      return (0, _immutabilityHelper2.default)(state, {
+        data: _defineProperty({}, index, {
+          $merge: { type: data.type }
+        })
+      });
+    }
+  }, {
+    key: 'handleAlbumEdit',
+    value: function handleAlbumEdit(state, _ref5) {
+      var isSuccess = _ref5.isSuccess,
+          response = _ref5.response,
+          query = _ref5.query;
+
+      if (!isSuccess) return state;
+
+      var index = _lodash2.default.findIndex(state.data, function (_ref6) {
+        var _id = _ref6._id;
         return query.id === _id;
       });
 
@@ -1044,9 +1088,11 @@ var DashboardPagesAlbumsViewReducer = function () {
         data: [],
         editingAlbum: '',
         status: _StatusConstants.STATUS_DEFAULT,
+        contentStatus: _StatusConstants.STATUS_LOADING,
         filter: {
           limit: 25,
-          offset: 0
+          offset: 0,
+          search: ''
         }
       };
     }
@@ -1073,13 +1119,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _CreateFormActions = __webpack_require__(181);
+var _CreateFormActions = __webpack_require__(180);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
@@ -1092,6 +1138,7 @@ var DashboardPagesAlbumsCreateFormReducer = function () {
     _classCallCheck(this, DashboardPagesAlbumsCreateFormReducer);
 
     this.bindAction(_CreateFormActions2.default.albumCreateCallback, this.handleAlbumCreate);
+    this.bindAction(_CreateFormActions2.default.formReset, this.handleFormReset(this.initialState));
   }
 
   _createClass(DashboardPagesAlbumsCreateFormReducer, [{
@@ -1100,6 +1147,13 @@ var DashboardPagesAlbumsCreateFormReducer = function () {
       var status = _ref.status;
 
       return _lodash2.default.assign({}, state, { status: status });
+    }
+  }, {
+    key: 'handleFormReset',
+    value: function handleFormReset(state) {
+      return function () {
+        return _lodash2.default.assign({}, state);
+      };
     }
   }, {
     key: 'initialState',
@@ -1131,7 +1185,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1223,23 +1277,23 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _immutabilityHelper = __webpack_require__(309);
+var _immutabilityHelper = __webpack_require__(311);
 
 var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _ViewActions = __webpack_require__(310);
+var _ViewActions = __webpack_require__(312);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
-var _CreateFormActions = __webpack_require__(182);
+var _CreateFormActions = __webpack_require__(181);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
@@ -1309,13 +1363,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _CreateFormActions = __webpack_require__(182);
+var _CreateFormActions = __webpack_require__(181);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
@@ -1367,13 +1421,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(257);
+var _reactRouterDom = __webpack_require__(258);
 
 var _Layout = __webpack_require__(751);
 
 var _Layout2 = _interopRequireDefault(_Layout);
 
-var _View = __webpack_require__(754);
+var _View = __webpack_require__(924);
 
 var _View2 = _interopRequireDefault(_View);
 
@@ -1471,17 +1525,25 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = __webpack_require__(13);
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _User = __webpack_require__(753);
+var _propTypes = __webpack_require__(1);
 
-var _User2 = _interopRequireDefault(_User);
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _WindowService = __webpack_require__(182);
+
+var _WindowService2 = _interopRequireDefault(_WindowService);
+
+var _SessionService = __webpack_require__(183);
+
+var _SessionService2 = _interopRequireDefault(_SessionService);
+
+var _ConnectDecorators = __webpack_require__(39);
+
+var _Controls = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1497,71 +1559,17 @@ var DashboardHeader = function (_Component) {
   function DashboardHeader() {
     _classCallCheck(this, DashboardHeader);
 
-    return _possibleConstructorReturn(this, (DashboardHeader.__proto__ || Object.getPrototypeOf(DashboardHeader)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (DashboardHeader.__proto__ || Object.getPrototypeOf(DashboardHeader)).call(this));
+
+    _this.onLogout = function () {
+      _SessionService2.default.signOut();
+
+      _WindowService2.default.redirect('/');
+    };
+    return _this;
   }
 
   _createClass(DashboardHeader, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'dashboard-header' },
-        _react2.default.createElement(_User2.default, null)
-      );
-    }
-  }]);
-
-  return DashboardHeader;
-}(_react.Component);
-
-exports.default = DashboardHeader;
-
-/***/ }),
-
-/***/ 753:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _ConnectDecorators = __webpack_require__(39);
-
-var _UserActions = __webpack_require__(177);
-
-var _UserActions2 = _interopRequireDefault(_UserActions);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SignIn = function (_Component) {
-  _inherits(SignIn, _Component);
-
-  function SignIn() {
-    _classCallCheck(this, SignIn);
-
-    return _possibleConstructorReturn(this, (SignIn.__proto__ || Object.getPrototypeOf(SignIn)).apply(this, arguments));
-  }
-
-  _createClass(SignIn, [{
     key: 'render',
     value: function render() {
       var displayName = this.props.displayName;
@@ -1569,25 +1577,44 @@ var SignIn = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'user' },
-        displayName
+        { className: 'dashboard-header' },
+        _react2.default.createElement(
+          'div',
+          { className: 'user-info' },
+          _react2.default.createElement(
+            _Controls.DropdownButton,
+            {
+              id: 'user-info-dropdown',
+              title: _react2.default.createElement(
+                'span',
+                { title: displayName },
+                displayName
+              ),
+              pullRight: true
+            },
+            _react2.default.createElement(
+              _Controls.MenuItem,
+              { key: 'exit', onSelect: this.onLogout },
+              '\u0412\u044B\u0445\u043E\u0434'
+            )
+          )
+        )
       );
     }
   }]);
 
-  return SignIn;
+  return DashboardHeader;
 }(_react.Component);
 
-SignIn.propTypes = {
-  displayName: _propTypes2.default.string,
-  actions: _propTypes2.default.object
+DashboardHeader.propTypes = {
+  displayName: _propTypes2.default.string
 };
 
-exports.default = (0, _ConnectDecorators.connectToStore)({ name: 'user', actions: _UserActions2.default })(SignIn);
+exports.default = (0, _ConnectDecorators.connectToStore)({ name: 'user' })(DashboardHeader);
 
 /***/ }),
 
-/***/ 754:
+/***/ 924:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1611,17 +1638,19 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ConnectDecorators = __webpack_require__(39);
 
-var _Helpers = __webpack_require__(84);
+var _Helpers = __webpack_require__(94);
 
-var _ViewActions = __webpack_require__(179);
+var _Controls = __webpack_require__(13);
+
+var _ViewActions = __webpack_require__(178);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
-var _CreateForm = __webpack_require__(758);
+var _CreateForm = __webpack_require__(925);
 
 var _CreateForm2 = _interopRequireDefault(_CreateForm);
 
-var _Album = __webpack_require__(927);
+var _Album = __webpack_require__(926);
 
 var _Album2 = _interopRequireDefault(_Album);
 
@@ -1646,13 +1675,18 @@ var DashboardPagesAlbumsView = function (_Component) {
     var _props$actions = props.actions,
         albumsGet = _props$actions.albumsGet,
         albumEditFormOpen = _props$actions.albumEditFormOpen,
-        albumDelete = _props$actions.albumDelete;
+        albumTypeToggle = _props$actions.albumTypeToggle,
+        albumDelete = _props$actions.albumDelete,
+        filterChange = _props$actions.filterChange;
 
 
     _this.componentDidMount = function () {
-      return albumsGet(_this.props.userId, _this.props.filter);
+      return _this.dataFetch();
     };
 
+    _this.dataFetch = function (filter) {
+      return albumsGet(_this.props.userId, filter || _this.props.filter);
+    };
     _this.onAlbumOpen = function (id, name) {
       return function () {
         return _this.props.history.push('/Dashboard.html/Links/' + id + '/' + name);
@@ -1663,36 +1697,60 @@ var DashboardPagesAlbumsView = function (_Component) {
         return albumDelete(id);
       };
     };
-    _this.onAlbumEditFormOpen = function (album) {
-      return function (event) {
-        event.stopPropagation();
-
-        albumEditFormOpen(album);
+    _this.onAlbumTypeToggle = function (id, type) {
+      return function () {
+        return albumTypeToggle(id, type);
       };
+    };
+    _this.onAlbumEditFormOpen = function (album) {
+      return function () {
+        return albumEditFormOpen(album);
+      };
+    };
+    _this.onFilterChange = function (filter) {
+      return filterChange(filter);
+    };
+    _this.onDownloadMore = function () {
+      return _this.onFilterChange({ offset: _this.props.filter.offset + _this.props.filter.limit });
     };
     return _this;
   }
 
   _createClass(DashboardPagesAlbumsView, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(_ref) {
+      var _ref$filter = _ref.filter,
+          offset = _ref$filter.offset,
+          search = _ref$filter.search,
+          limit = _ref$filter.limit;
+      var _props$filter = this.props.filter,
+          prevOffset = _props$filter.offset,
+          prevSearch = _props$filter.search;
+
+
+      if (prevOffset !== offset || search !== prevSearch) this.dataFetch({ search: search, offset: offset, limit: limit });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
       var _props = this.props,
           data = _props.data,
+          contentStatus = _props.contentStatus,
           status = _props.status,
           editingAlbum = _props.editingAlbum;
 
 
       return _react2.default.createElement(
         _Helpers.ContentStatus,
-        { status: status },
+        { status: contentStatus },
         _react2.default.createElement(
           'div',
           { className: 'albums' },
-          data.map(function (_ref) {
-            var _id = _ref._id,
-                album = _objectWithoutProperties(_ref, ['_id']);
+          data.map(function (_ref2) {
+            var _id = _ref2._id,
+                album = _objectWithoutProperties(_ref2, ['_id']);
 
             return _react2.default.createElement(_Album2.default, _extends({
               key: _id
@@ -1701,10 +1759,24 @@ var DashboardPagesAlbumsView = function (_Component) {
               id: _id,
               onAlbumOpen: _this2.onAlbumOpen,
               onAlbumEditFormOpen: _this2.onAlbumEditFormOpen,
-              onAlbumDelete: _this2.onAlbumDelete
+              onAlbumDelete: _this2.onAlbumDelete,
+              onAlbumTypeToggle: _this2.onAlbumTypeToggle
             }));
           }),
           _react2.default.createElement(_CreateForm2.default, { userId: this.props.userId })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'download-more' },
+          _react2.default.createElement(
+            _Controls.ButtonLoader,
+            { status: status, onClick: this.onDownloadMore },
+            _react2.default.createElement(
+              'i',
+              { className: 'material-icons', title: 'Show more' },
+              'arrow_downward'
+            )
+          )
         )
       );
     }
@@ -1720,12 +1792,13 @@ DashboardPagesAlbumsView.propTypes = {
   editingAlbum: _propTypes2.default.string,
   userId: _propTypes2.default.string,
   status: _propTypes2.default.string,
+  contentStatus: _propTypes2.default.string,
   data: _propTypes2.default.array
 };
 
-var mapStateToProps = function mapStateToProps(_ref2) {
-  var albums = _ref2.albums,
-      user = _ref2.user;
+var mapStateToProps = function mapStateToProps(_ref3) {
+  var albums = _ref3.albums,
+      user = _ref3.user;
   return _extends({}, albums, {
     userId: user['_id']
   });
@@ -1735,7 +1808,7 @@ exports.default = (0, _ConnectDecorators.connectToStore)({ mapStateToProps: mapS
 
 /***/ }),
 
-/***/ 758:
+/***/ 925:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1757,19 +1830,19 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(85);
+var _reactAddonsCssTransitionGroup = __webpack_require__(93);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
 var _ConnectDecorators = __webpack_require__(39);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
-var _CreateFormActions = __webpack_require__(181);
+var _CreateFormActions = __webpack_require__(180);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
-var _Form = __webpack_require__(362);
+var _Form = __webpack_require__(364);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -1792,7 +1865,9 @@ var DashboardPagesAlbumsCreateForm = function (_Component) {
     var _this = _possibleConstructorReturn(this, (DashboardPagesAlbumsCreateForm.__proto__ || Object.getPrototypeOf(DashboardPagesAlbumsCreateForm)).call(this));
 
     var reset = props.reset,
-        albumCreate = props.actions.albumCreate;
+        _props$actions = props.actions,
+        albumCreate = _props$actions.albumCreate,
+        formReset = _props$actions.formReset;
 
 
     _this.state = {
@@ -1800,7 +1875,9 @@ var DashboardPagesAlbumsCreateForm = function (_Component) {
     };
 
     _this.openToggle = function () {
-      reset();_this.setState({ isOpen: !_this.state.isOpen });
+      reset();
+      formReset();
+      _this.setState({ isOpen: !_this.state.isOpen });
     };
     _this.onAlbumCreate = function (album) {
       return albumCreate(_extends({}, album, { userId: _this.props.userId }), _this.openToggle);
@@ -1878,7 +1955,7 @@ exports.default = (0, _ConnectDecorators.compose)((0, _ConnectDecorators.connect
 
 /***/ }),
 
-/***/ 927:
+/***/ 926:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1896,7 +1973,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(85);
+var _reactAddonsCssTransitionGroup = __webpack_require__(93);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
@@ -1904,19 +1981,23 @@ var _FormUtils = __webpack_require__(73);
 
 var _FormUtils2 = _interopRequireDefault(_FormUtils);
 
-var _EditForm = __webpack_require__(928);
+var _EditForm = __webpack_require__(927);
 
 var _EditForm2 = _interopRequireDefault(_EditForm);
+
+var _AlbumsConstants = __webpack_require__(928);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DashboardPagesAlbum = function DashboardPagesAlbum(_ref) {
   var isEditing = _ref.isEditing,
       description = _ref.description,
+      type = _ref.type,
       title = _ref.title,
       id = _ref.id,
       onAlbumOpen = _ref.onAlbumOpen,
       onAlbumEditFormOpen = _ref.onAlbumEditFormOpen,
+      onAlbumTypeToggle = _ref.onAlbumTypeToggle,
       onAlbumDelete = _ref.onAlbumDelete;
   return _react2.default.createElement(
     'div',
@@ -1955,10 +2036,14 @@ var DashboardPagesAlbum = function DashboardPagesAlbum(_ref) {
             { className: 'material-icons', title: 'Edit album', onClick: onAlbumEditFormOpen({ id: id, title: title, description: description }) },
             'mode_edit'
           ),
-          _react2.default.createElement(
+          _AlbumsConstants.ALBUM_TYPE.private === type ? _react2.default.createElement(
             'i',
-            { className: 'material-icons', title: 'Go to the links page', onClick: onAlbumOpen(id, title) },
-            'forward'
+            { className: 'material-icons', title: 'Make album published', onClick: onAlbumTypeToggle(id, _AlbumsConstants.ALBUM_TYPE.public) },
+            'lock_outline'
+          ) : _react2.default.createElement(
+            'i',
+            { className: 'material-icons', title: 'Make alum private', onClick: onAlbumTypeToggle(id, _AlbumsConstants.ALBUM_TYPE.private) },
+            'lock_open'
           )
         )
       )
@@ -1969,10 +2054,12 @@ var DashboardPagesAlbum = function DashboardPagesAlbum(_ref) {
 DashboardPagesAlbum.propTypes = {
   isEditing: _propTypes2.default.bool,
   id: _propTypes2.default.string,
+  type: _propTypes2.default.string,
   title: _propTypes2.default.string,
   description: _propTypes2.default.string,
   onAlbumOpen: _propTypes2.default.func,
   onAlbumEditFormOpen: _propTypes2.default.func,
+  onAlbumTypeToggle: _propTypes2.default.func,
   onAlbumDelete: _propTypes2.default.func
 };
 
@@ -1980,7 +2067,7 @@ exports.default = DashboardPagesAlbum;
 
 /***/ }),
 
-/***/ 928:
+/***/ 927:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2004,13 +2091,13 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ConnectDecorators = __webpack_require__(39);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
 var _EditFormActions = __webpack_require__(117);
 
 var _EditFormActions2 = _interopRequireDefault(_EditFormActions);
 
-var _Form = __webpack_require__(362);
+var _Form = __webpack_require__(364);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -2090,6 +2177,22 @@ exports.default = (0, _ConnectDecorators.compose)((0, _ConnectDecorators.connect
 
 /***/ }),
 
+/***/ 928:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ALBUM_TYPE = exports.ALBUM_TYPE = {
+  private: 'private',
+  public: 'public'
+};
+
+/***/ }),
+
 /***/ 929:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2114,9 +2217,9 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ConnectDecorators = __webpack_require__(39);
 
-var _Helpers = __webpack_require__(84);
+var _Helpers = __webpack_require__(94);
 
-var _ViewActions = __webpack_require__(310);
+var _ViewActions = __webpack_require__(312);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
@@ -2226,15 +2329,15 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(85);
+var _reactAddonsCssTransitionGroup = __webpack_require__(93);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
 var _ConnectDecorators = __webpack_require__(39);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
-var _CreateFormActions = __webpack_require__(182);
+var _CreateFormActions = __webpack_require__(181);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
@@ -2344,7 +2447,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Form = __webpack_require__(72);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2449,9 +2552,9 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ConnectDecorators = __webpack_require__(39);
 
-var _Helpers = __webpack_require__(84);
+var _Helpers = __webpack_require__(94);
 
-var _UserActions = __webpack_require__(177);
+var _UserActions = __webpack_require__(304);
 
 var _UserActions2 = _interopRequireDefault(_UserActions);
 

@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 213:
+/***/ 214:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13,7 +13,7 @@ var FIELD_MAX_LENGTH = exports.FIELD_MAX_LENGTH = 50;
 
 /***/ }),
 
-/***/ 363:
+/***/ 365:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27,11 +27,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _WindowService = __webpack_require__(364);
+var _WindowService = __webpack_require__(182);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
-var _SessionService = __webpack_require__(365);
+var _SessionService = __webpack_require__(183);
 
 var _SessionService2 = _interopRequireDefault(_SessionService);
 
@@ -65,7 +65,7 @@ var AccountSignInActions = function () {
           dispatch(_this.signInCallback(result));
 
           setTimeout(function () {
-            return _WindowService2.default.redirect('http://localhost:3000/Dashboard.html');
+            return _WindowService2.default.redirect('/Dashboard.html');
           }, _StatusConstants.DELAY);
         }).catch(function (result) {
           dispatch(_this.signInCallback(result));
@@ -82,140 +82,6 @@ var AccountSignInActions = function () {
 }();
 
 exports.default = (0, _realt.createActions)(AccountSignInActions);
-
-/***/ }),
-
-/***/ 364:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var WindowService = function () {
-  function WindowService() {
-    _classCallCheck(this, WindowService);
-
-    this.window = window;
-  }
-
-  _createClass(WindowService, [{
-    key: "redirect",
-    value: function redirect(href) {
-      this.window.location.href = href;
-    }
-  }, {
-    key: "open",
-    value: function open(link) {
-      this.window.open(link);
-    }
-  }, {
-    key: "listen",
-    value: function listen(eventType, callback) {
-      this.window.addEventListener(eventType, callback);
-    }
-  }, {
-    key: "unlisten",
-    value: function unlisten(eventType, callback) {
-      this.window.removeEventListener(eventType, callback);
-    }
-  }, {
-    key: "location",
-    get: function get() {
-      return this.window.location;
-    }
-  }, {
-    key: "origin",
-    get: function get() {
-      return this.window.location.origin;
-    }
-  }, {
-    key: "serviceOrigins",
-    get: function get() {
-      return this.window.appConfig ? this.window.appConfig.serviceOrigins : {};
-    }
-  }]);
-
-  return WindowService;
-}();
-
-exports.default = new WindowService();
-
-/***/ }),
-
-/***/ 365:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _LocalStorageService = __webpack_require__(308);
-
-var _LocalStorageService2 = _interopRequireDefault(_LocalStorageService);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ACCESS_TOKEN = 'access_token';
-
-var SessionService = function () {
-  function SessionService() {
-    _classCallCheck(this, SessionService);
-
-    this.document = document;
-  }
-
-  _createClass(SessionService, [{
-    key: 'getCookie',
-    value: function getCookie() {
-      return document.cookie;
-    }
-  }, {
-    key: 'setCookie',
-    value: function setCookie(name, value) {
-      var resultValue = encodeURIComponent(value);
-      var expires = new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000).toUTCString();
-
-      document.cookie = name + '=' + resultValue + '; path=/; expires=' + expires;
-    }
-  }, {
-    key: 'removeCookie',
-    value: function removeCookie(name) {
-      document.cookie = name + '=; path=/; expires=' + new Date(0).toUTCString();
-    }
-  }, {
-    key: 'signIn',
-    value: function signIn(token) {
-      _LocalStorageService2.default.set(_LocalStorageService.TOKEN, token);
-    }
-  }, {
-    key: 'signOut',
-    value: function signOut() {
-      this.removeCookie(ACCESS_TOKEN);
-
-      _LocalStorageService2.default.remove(_LocalStorageService.TOKEN);
-      _LocalStorageService2.default.remove(_LocalStorageService.USER);
-    }
-  }]);
-
-  return SessionService;
-}();
-
-exports.default = new SessionService();
 
 /***/ }),
 
@@ -262,11 +128,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _WindowService = __webpack_require__(364);
+var _WindowService = __webpack_require__(182);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
-var _SessionService = __webpack_require__(365);
+var _SessionService = __webpack_require__(183);
 
 var _SessionService2 = _interopRequireDefault(_SessionService);
 
@@ -300,7 +166,7 @@ var AccountRegistrationActions = function () {
           dispatch(_this.registrationCallback(result));
 
           setTimeout(function () {
-            return _WindowService2.default.redirect('http://localhost:3000/Dashboard.html');
+            return _WindowService2.default.redirect('/Dashboard.html');
           }, _StatusConstants.DELAY);
         }).catch(function (result) {
           dispatch(_this.registrationCallback(result));
@@ -335,7 +201,7 @@ var _ValidationService = __webpack_require__(942);
 
 var _ValidationRules = __webpack_require__(943);
 
-var _SignInConstants = __webpack_require__(213);
+var _SignInConstants = __webpack_require__(214);
 
 var signInValidation = (0, _ValidationService.combine)((0, _ValidationService.validate)('email', _ValidationRules.required, (0, _ValidationRules.maxLength)(_SignInConstants.FIELD_MAX_LENGTH), _ValidationRules.email), (0, _ValidationService.validate)('password', _ValidationRules.required, (0, _ValidationRules.maxLength)(_SignInConstants.FIELD_MAX_LENGTH), _ValidationRules.alfaNumber));
 
@@ -352,7 +218,7 @@ exports.registrationValidation = registrationValidation;
 "use strict";
 
 
-var _AppService = __webpack_require__(214);
+var _AppService = __webpack_require__(215);
 
 var _AppService2 = _interopRequireDefault(_AppService);
 
@@ -424,13 +290,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(21);
 
-var _SignInActions = __webpack_require__(363);
+var _SignInActions = __webpack_require__(365);
 
 var _SignInActions2 = _interopRequireDefault(_SignInActions);
 
@@ -486,7 +352,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(24);
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -546,7 +412,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -554,11 +420,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsCssTransitionGroup = __webpack_require__(85);
+var _reactAddonsCssTransitionGroup = __webpack_require__(93);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
 var _SignIn = __webpack_require__(940);
 
@@ -680,7 +546,7 @@ var _SigInForm2 = _interopRequireDefault(_SigInForm);
 
 var _ValidationConstants = __webpack_require__(368);
 
-var _SignInActions = __webpack_require__(363);
+var _SignInActions = __webpack_require__(365);
 
 var _SignInActions2 = _interopRequireDefault(_SignInActions);
 
@@ -750,9 +616,9 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Form = __webpack_require__(72);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
-var _SignInConstants = __webpack_require__(213);
+var _SignInConstants = __webpack_require__(214);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -766,7 +632,7 @@ var SignInForm = function SignInForm(_ref) {
     _Form.Form,
     props,
     _react2.default.createElement(_Form.Input, { name: 'email', label: 'Email', icon: 'email', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
-    _react2.default.createElement(_Form.Input, { name: 'password', label: 'Password', icon: 'lock', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
+    _react2.default.createElement(_Form.Input, { name: 'password', label: 'Password', type: 'password', icon: 'lock', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
     _react2.default.createElement(
       _Controls.ButtonsGroup,
       null,
@@ -799,7 +665,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.validate = undefined;
 exports.combine = combine;
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -842,7 +708,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.beforeSameDate = exports.beforeDate = exports.afterSameDate = exports.afterDate = exports.kpp = exports.inn = exports.numberInterval = exports.weekDay = exports.date = exports.maskedInputDate = exports.alfaNumber = exports.alfa = exports.number = exports.maxLength = exports.minLength = exports.maxCount = exports.login = exports.email = exports.requiredIfNot = exports.requiredIf = exports.required = undefined;
 
-var _lodash = __webpack_require__(13);
+var _lodash = __webpack_require__(16);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1269,9 +1135,9 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Form = __webpack_require__(72);
 
-var _Controls = __webpack_require__(15);
+var _Controls = __webpack_require__(13);
 
-var _SignInConstants = __webpack_require__(213);
+var _SignInConstants = __webpack_require__(214);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
