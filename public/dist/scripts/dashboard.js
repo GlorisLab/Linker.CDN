@@ -1442,7 +1442,7 @@ var _UserProvider2 = _interopRequireDefault(_UserProvider);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var EconomicsApp = function EconomicsApp() {
-  var path = '/Dashboard.html';
+  var path = '/Dashboard';
 
   return _react2.default.createElement(
     _Layout2.default,

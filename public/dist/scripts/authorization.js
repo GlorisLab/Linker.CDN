@@ -65,7 +65,7 @@ var AccountSignInActions = function () {
           dispatch(_this.signInCallback(result));
 
           setTimeout(function () {
-            return _WindowService2.default.redirect('/Dashboard.html');
+            return _WindowService2.default.redirect('/Dashboard');
           }, _StatusConstants.DELAY);
         }).catch(function (result) {
           dispatch(_this.signInCallback(result));
@@ -166,7 +166,7 @@ var AccountRegistrationActions = function () {
           dispatch(_this.registrationCallback(result));
 
           setTimeout(function () {
-            return _WindowService2.default.redirect('/Dashboard.html');
+            return _WindowService2.default.redirect('/Dashboard');
           }, _StatusConstants.DELAY);
         }).catch(function (result) {
           dispatch(_this.registrationCallback(result));
@@ -472,7 +472,7 @@ var AuthorizationLayout = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'authorization-content-wrap' },
-          _react2.default.createElement('img', { alt: 'sorry...', src: 'http://127.0.0.1:3000/sign-in.png' }),
+          _react2.default.createElement('img', { alt: 'sorry...', src: 'http://localhost:8080/contents/sign-in.png' }),
           _react2.default.createElement(
             _Controls.Button,
             { bsStyle: 'primary', className: 'toggled-view', onClick: this.onToggleView },
