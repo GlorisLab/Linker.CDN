@@ -84503,6 +84503,7 @@ var ControlsSearchInput = function (_Component) {
         'form',
         { className: (0, _classnames2.default)('search-input', className), onSubmit: this.onSearch },
         _react2.default.createElement(_Controls.FormControl, {
+          value: this.state.value,
           placeholder: placeholder,
           onChange: this.onChange
         }),

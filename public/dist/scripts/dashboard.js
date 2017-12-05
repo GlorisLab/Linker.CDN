@@ -557,7 +557,7 @@ var DashboardPagesLinksActionsCreate = function () {
   function DashboardPagesLinksActionsCreate() {
     _classCallCheck(this, DashboardPagesLinksActionsCreate);
 
-    this.generate('linkCreateCallback');
+    this.generate('linkCreateCallback', 'formReset');
   }
 
   _createClass(DashboardPagesLinksActionsCreate, [{
@@ -650,7 +650,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var DashboardSearcherActions = function DashboardSearcherActions() {
   _classCallCheck(this, DashboardSearcherActions);
 
-  this.generate('changeValue', 'reset');
+  this.generate('changeValue', 'searcherClear');
 };
 
 exports.default = (0, _realt.createActions)(DashboardSearcherActions);
@@ -682,12 +682,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var DashboardPagesLinksActionsView = function () {
   function DashboardPagesLinksActionsView() {
     _classCallCheck(this, DashboardPagesLinksActionsView);
+
+    this.generate('filterChange');
   }
 
   _createClass(DashboardPagesLinksActionsView, [{
     key: 'linksGet',
-    value: function linksGet(query) {
-      return _LinksSource2.default.getLinks(query);
+    value: function linksGet(albumId, query) {
+      return _LinksSource2.default.getLinks(albumId, query);
+    }
+  }, {
+    key: 'linkDelete',
+    value: function linkDelete(id) {
+      return _LinksSource2.default.deleteLink(id);
     }
   }]);
 
@@ -717,11 +724,14 @@ var _UrlConstants = __webpack_require__(116);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  getLinks: function getLinks(albumId) {
-    return _AjaxService2.default.getRequest(_UrlConstants.LINK_URL + 'findByAlbum/' + albumId, { limit: 10, offset: 0 });
+  getLinks: function getLinks(albumId, query) {
+    return _AjaxService2.default.getRequest(_UrlConstants.LINK_URL + 'findByAlbum/' + albumId, query);
   },
   createLink: function createLink(query) {
     return _AjaxService2.default.postRequest(_UrlConstants.LINK_URL + 'create', query);
+  },
+  deleteLink: function deleteLink(id) {
+    return _AjaxService2.default.postRequest(_UrlConstants.LINK_URL + 'remove/' + id, null, id);
   }
 };
 
@@ -996,7 +1006,7 @@ var DashboardUserReducer = function () {
     get: function get() {
       return {
         user: {},
-        status: _StatusConstants.STATUS_DEFAULT
+        status: _StatusConstants.STATUS_LOADING
       };
     }
   }]);
@@ -1065,7 +1075,7 @@ var DashboardSearcherReducer = function () {
     _classCallCheck(this, DashboardSearcherReducer);
 
     this.bindAction(_SearcherActions2.default.changeValue, this.handleChangeValue);
-    this.bindAction(_SearcherActions2.default.reset, this.handleReset);
+    this.bindAction(_SearcherActions2.default.searcherClear, this.handleSearcherClear);
   }
 
   _createClass(DashboardSearcherReducer, [{
@@ -1074,8 +1084,8 @@ var DashboardSearcherReducer = function () {
       return _lodash2.default.assign({}, state, { value: value });
     }
   }, {
-    key: 'handleReset',
-    value: function handleReset(state) {
+    key: 'handleSearcherClear',
+    value: function handleSearcherClear(state) {
       return _lodash2.default.assign({}, state, { value: '' });
     }
   }, {
@@ -1196,7 +1206,7 @@ var DashboardPagesAlbumsViewReducer = function () {
 
       if (state.filter.offset !== 0) {
         return (0, _immutabilityHelper2.default)(state, {
-          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response.albums)) }
+          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response.albums)), lastCount: response.albums.length }
         });
       }
 
@@ -1205,7 +1215,7 @@ var DashboardPagesAlbumsViewReducer = function () {
           contentStatus: _StatusConstants.STATUS_DEFAULT,
           status: _StatusConstants.STATUS_DEFAULT,
           data: response.albums,
-          totalCount: response.totalCount
+          lastCount: response.albums.length
         }
       });
     }
@@ -1493,6 +1503,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _immutabilityHelper = __webpack_require__(177);
@@ -1517,6 +1529,8 @@ var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DashboardPagesLinksViewReducer = function () {
@@ -1524,6 +1538,8 @@ var DashboardPagesLinksViewReducer = function () {
     _classCallCheck(this, DashboardPagesLinksViewReducer);
 
     this.bindAction(_ViewActions2.default.linksGet, this.handleLinksGet);
+    this.bindAction(_ViewActions2.default.linkDelete, this.handleLinkDelete);
+    this.bindAction(_ViewActions2.default.filterChange, this.handleFilterChange);
     this.bindAction(_CreateFormActions2.default.linkCreateCallback, this.handleLinkCreate);
   }
 
@@ -1536,7 +1552,20 @@ var DashboardPagesLinksViewReducer = function () {
 
       if (!isSuccess) return _lodash2.default.assign({}, state, { status: status });
 
-      return _lodash2.default.assign({}, state, { status: _StatusConstants.STATUS_DEFAULT, data: response.links });
+      if (state.filter.offset !== 0) {
+        return (0, _immutabilityHelper2.default)(state, {
+          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response.links)), lastCount: response.links.length }
+        });
+      }
+
+      return (0, _immutabilityHelper2.default)(state, {
+        $merge: {
+          contentStatus: _StatusConstants.STATUS_DEFAULT,
+          status: _StatusConstants.STATUS_DEFAULT,
+          data: response.links,
+          lastCount: response.links.length
+        }
+      });
     }
   }, {
     key: 'handleLinkCreate',
@@ -1551,11 +1580,47 @@ var DashboardPagesLinksViewReducer = function () {
       });
     }
   }, {
+    key: 'handleFilterChange',
+    value: function handleFilterChange(state, filter) {
+      return (0, _immutabilityHelper2.default)(state, {
+        filter: { $merge: _extends({}, filter) }
+      });
+    }
+  }, {
+    key: 'handleLinkDelete',
+    value: function handleLinkDelete(state, _ref3) {
+      var isSuccess = _ref3.isSuccess,
+          data = _ref3.data;
+
+      if (!isSuccess) return state;
+
+      var index = _lodash2.default.findIndex(state.data, function (_ref4) {
+        var id = _ref4.id;
+        return data === id;
+      });
+
+      if (index < 0) return state;
+
+      return (0, _immutabilityHelper2.default)(state, {
+        $merge: {
+          status: _StatusConstants.STATUS_DEFAULT,
+          totalCount: state.totalCount - 1
+        },
+        data: { $splice: [[index, 1]] }
+      });
+    }
+  }, {
     key: 'initialState',
     get: function get() {
       return {
         data: [],
-        status: _StatusConstants.STATUS_DEFAULT
+        status: _StatusConstants.STATUS_DEFAULT,
+        contentStatus: _StatusConstants.STATUS_LOADING,
+        filter: {
+          limit: 25,
+          offset: 0,
+          search: ''
+        }
       };
     }
   }]);
@@ -1600,6 +1665,7 @@ var DashboardPagesLinksCreateFormReducer = function () {
     _classCallCheck(this, DashboardPagesLinksCreateFormReducer);
 
     this.bindAction(_CreateFormActions2.default.linkCreateCallback, this.handleLinkCreate);
+    this.bindAction(_CreateFormActions2.default.formReset, this.handleFormReset(this.initialState));
   }
 
   _createClass(DashboardPagesLinksCreateFormReducer, [{
@@ -1608,6 +1674,13 @@ var DashboardPagesLinksCreateFormReducer = function () {
       var status = _ref.status;
 
       return _lodash2.default.assign({}, state, { status: status });
+    }
+  }, {
+    key: 'handleFormReset',
+    value: function handleFormReset(state) {
+      return function () {
+        return _lodash2.default.assign({}, state);
+      };
     }
   }, {
     key: 'initialState',
@@ -1934,6 +2007,10 @@ var _Helpers = __webpack_require__(94);
 
 var _Controls = __webpack_require__(13);
 
+var _SearcherActions = __webpack_require__(313);
+
+var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
+
 var _ViewActions = __webpack_require__(180);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
@@ -1969,11 +2046,15 @@ var DashboardPagesAlbumsView = function (_Component) {
         albumEditFormOpen = _props$actions.albumEditFormOpen,
         albumTypeToggle = _props$actions.albumTypeToggle,
         albumDelete = _props$actions.albumDelete,
-        filterChange = _props$actions.filterChange;
+        filterChange = _props$actions.filterChange,
+        searcherClear = _props$actions.searcherClear;
 
 
     _this.componentDidMount = function () {
       return _this.dataFetch();
+    };
+    _this.componentWillUnmount = function () {
+      return searcherClear();
     };
 
     _this.dataFetch = function (filter) {
@@ -2032,6 +2113,7 @@ var DashboardPagesAlbumsView = function (_Component) {
       var _this2 = this;
 
       var _props2 = this.props,
+          hiddenDownloadMore = _props2.hiddenDownloadMore,
           data = _props2.data,
           contentStatus = _props2.contentStatus,
           status = _props2.status,
@@ -2061,7 +2143,7 @@ var DashboardPagesAlbumsView = function (_Component) {
           }),
           _react2.default.createElement(_CreateForm2.default, { userId: this.props.userId })
         ),
-        _react2.default.createElement(
+        !hiddenDownloadMore ? _react2.default.createElement(
           'div',
           { className: 'download-more' },
           _react2.default.createElement(
@@ -2073,7 +2155,7 @@ var DashboardPagesAlbumsView = function (_Component) {
               'arrow_downward'
             )
           )
-        )
+        ) : null
       );
     }
   }]);
@@ -2082,6 +2164,7 @@ var DashboardPagesAlbumsView = function (_Component) {
 }(_react.Component);
 
 DashboardPagesAlbumsView.propTypes = {
+  hiddenDownloadMore: _propTypes2.default.bool,
   actions: _propTypes2.default.object,
   history: _propTypes2.default.object,
   filter: _propTypes2.default.object,
@@ -2099,11 +2182,12 @@ var mapStateToProps = function mapStateToProps(_ref3) {
       searcher = _ref3.searcher;
   return _extends({}, albums, {
     searcherValue: searcher.value,
-    userId: user.id
+    userId: user.id,
+    hiddenDownloadMore: albums.lastCount < albums.filter.limit
   });
 };
 
-exports.default = (0, _ConnectDecorators.connectToStore)({ mapStateToProps: mapStateToProps, actions: _ViewActions2.default })(DashboardPagesAlbumsView);
+exports.default = (0, _ConnectDecorators.connectToStore)({ mapStateToProps: mapStateToProps, actions: _extends({}, _ViewActions2.default, _SearcherActions2.default) })(DashboardPagesAlbumsView);
 
 /***/ }),
 
@@ -2518,6 +2602,12 @@ var _ConnectDecorators = __webpack_require__(31);
 
 var _Helpers = __webpack_require__(94);
 
+var _Controls = __webpack_require__(13);
+
+var _SearcherActions = __webpack_require__(313);
+
+var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
+
 var _ViewActions = __webpack_require__(314);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
@@ -2548,16 +2638,27 @@ var DashboardPagesLinksView = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (DashboardPagesLinksView.__proto__ || Object.getPrototypeOf(DashboardPagesLinksView)).call(this));
 
-    var linksGet = props.actions.linksGet,
+    var _props$actions = props.actions,
+        linksGet = _props$actions.linksGet,
+        searcherClear = _props$actions.searcherClear,
+        filterChange = _props$actions.filterChange,
+        linkDelete = _props$actions.linkDelete,
         match = props.match;
 
 
+    _this.componentWillUnmount = function () {
+      return searcherClear();
+    };
     _this.componentDidMount = function () {
-      return linksGet(match.params.albumId);
+      return _this.dataFetch();
+    };
+
+    _this.dataFetch = function (filter) {
+      return linksGet(match.params.albumId, filter || _this.props.filter);
     };
     _this.onLinksDelete = function (id) {
       return function () {
-        return linksGet(match.params.albumId);
+        return linkDelete(id);
       };
     };
     _this.onLinkOpen = function (url) {
@@ -2565,29 +2666,55 @@ var DashboardPagesLinksView = function (_Component) {
         return window.open(url);
       };
     };
+    _this.onFilterChange = function (filter) {
+      return filterChange(filter);
+    };
+    _this.onDownloadMore = function () {
+      return _this.onFilterChange({ offset: _this.props.filter.offset + _this.props.filter.limit });
+    };
     return _this;
   }
 
   _createClass(DashboardPagesLinksView, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(_ref) {
+      var _ref$filter = _ref.filter,
+          offset = _ref$filter.offset,
+          limit = _ref$filter.limit,
+          searcherValue = _ref.searcherValue;
+      var _props = this.props,
+          prevOffset = _props.filter.offset,
+          prevSearcherValue = _props.searcherValue;
+
+
+      if (prevOffset !== offset) this.dataFetch({ searcherValue: searcherValue, offset: offset, limit: limit });
+      if (searcherValue !== prevSearcherValue) {
+        this.onFilterChange({ offset: 0 });
+        this.dataFetch({ searcherValue: searcherValue, offset: 0, limit: limit });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props,
-          data = _props.data,
-          status = _props.status,
-          match = _props.match;
+      var _props2 = this.props,
+          hiddenDownloadMore = _props2.hiddenDownloadMore,
+          data = _props2.data,
+          status = _props2.status,
+          contentStatus = _props2.contentStatus,
+          match = _props2.match;
 
 
       return _react2.default.createElement(
         _Helpers.ContentStatus,
-        { status: status },
+        { status: contentStatus },
         _react2.default.createElement(
           'div',
           { className: 'cards' },
-          data.map(function (_ref) {
-            var id = _ref.id,
-                link = _objectWithoutProperties(_ref, ['id']);
+          data.map(function (_ref2) {
+            var id = _ref2.id,
+                link = _objectWithoutProperties(_ref2, ['id']);
 
             return _react2.default.createElement(_Link2.default, _extends({}, link, {
               key: id,
@@ -2597,7 +2724,20 @@ var DashboardPagesLinksView = function (_Component) {
             }));
           }),
           _react2.default.createElement(_CreateForm2.default, { userId: this.props.userId, albumId: match.params.albumId })
-        )
+        ),
+        !hiddenDownloadMore ? _react2.default.createElement(
+          'div',
+          { className: 'download-more' },
+          _react2.default.createElement(
+            _Controls.ButtonLoader,
+            { status: status, onClick: this.onDownloadMore },
+            _react2.default.createElement(
+              'i',
+              { className: 'material-icons', title: 'Show more' },
+              'arrow_downward'
+            )
+          )
+        ) : null
       );
     }
   }]);
@@ -2606,22 +2746,32 @@ var DashboardPagesLinksView = function (_Component) {
 }(_react.Component);
 
 DashboardPagesLinksView.propTypes = {
+  hiddenDownloadMore: _propTypes2.default.bool,
   actions: _propTypes2.default.object,
+  filter: _propTypes2.default.object,
   match: _propTypes2.default.object,
+  searcherValue: _propTypes2.default.string,
+  contentStatus: _propTypes2.default.string,
   userId: _propTypes2.default.string,
   status: _propTypes2.default.string,
   data: _propTypes2.default.array
 };
 
-var mapStateToProps = function mapStateToProps(_ref2) {
-  var links = _ref2.links,
-      user = _ref2.user;
+var mapStateToProps = function mapStateToProps(_ref3) {
+  var links = _ref3.links,
+      user = _ref3.user,
+      searcher = _ref3.searcher;
   return _extends({}, links, {
+    searcherValue: searcher.value,
+    hiddenDownloadMore: links.lastCount < links.filter.limit,
     userId: user.id
   });
 };
 
-exports.default = (0, _ConnectDecorators.connectToStore)({ mapStateToProps: mapStateToProps, actions: _ViewActions2.default })(DashboardPagesLinksView);
+exports.default = (0, _ConnectDecorators.connectToStore)({
+  mapStateToProps: mapStateToProps,
+  actions: _extends({}, _ViewActions2.default, _SearcherActions2.default)
+})(DashboardPagesLinksView);
 
 /***/ }),
 
@@ -2680,7 +2830,9 @@ var DashboardPagesLinkCreateForm = function (_Component) {
     var _this = _possibleConstructorReturn(this, (DashboardPagesLinkCreateForm.__proto__ || Object.getPrototypeOf(DashboardPagesLinkCreateForm)).call(this));
 
     var reset = props.reset,
-        linkCreate = props.actions.linkCreate;
+        _props$actions = props.actions,
+        linkCreate = _props$actions.linkCreate,
+        formReset = _props$actions.formReset;
 
 
     _this.state = {
@@ -2688,10 +2840,15 @@ var DashboardPagesLinkCreateForm = function (_Component) {
     };
 
     _this.openToggle = function () {
-      reset();_this.setState({ isOpen: !_this.state.isOpen });
+      reset();
+      formReset();
+      _this.setState({ isOpen: !_this.state.isOpen });
     };
     _this.onLinkCreate = function (link) {
       return linkCreate(_extends({}, link, { albumId: _this.props.albumId }), _this.openToggle);
+    };
+    _this.onCreateCancel = function () {
+      return _this.openToggle();
     };
     return _this;
   }
@@ -2711,8 +2868,8 @@ var DashboardPagesLinkCreateForm = function (_Component) {
           },
           this.state.isOpen && _react2.default.createElement(
             'div',
-            { className: 'card create-card' },
-            _react2.default.createElement(_Form2.default, _extends({ onSubmit: this.onLinkCreate }, this.props))
+            { className: 'card' },
+            _react2.default.createElement(_Form2.default, _extends({ onSubmit: this.onLinkCreate, onCreateCancel: this.onCreateCancel }, this.props))
           ),
           !this.state.isOpen && _react2.default.createElement(
             'div',
@@ -2755,6 +2912,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -2773,15 +2932,21 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 var DashboardPagesLinksCreateForm = function DashboardPagesLinksCreateForm(_ref) {
   var status = _ref.status,
-      props = _objectWithoutProperties(_ref, ['status']);
+      onCreateCancel = _ref.onCreateCancel,
+      props = _objectWithoutProperties(_ref, ['status', 'onCreateCancel']);
 
   return _react2.default.createElement(
     _Form.Form,
-    props,
+    _extends({}, props, { className: 'card-form' }),
     _react2.default.createElement(_Form.Input, { name: 'url', label: 'Url*' }),
     _react2.default.createElement(
       _Controls.ButtonsGroup,
       null,
+      _react2.default.createElement(
+        _Controls.Button,
+        { onClick: onCreateCancel },
+        'cancel'
+      ),
       _react2.default.createElement(
         _Controls.ButtonLoader,
         { status: status },
@@ -2792,7 +2957,8 @@ var DashboardPagesLinksCreateForm = function DashboardPagesLinksCreateForm(_ref)
 };
 
 DashboardPagesLinksCreateForm.propTypes = {
-  status: _propTypes2.default.string
+  status: _propTypes2.default.string,
+  onCreateCancel: _propTypes2.default.func
 };
 
 exports.default = DashboardPagesLinksCreateForm;
