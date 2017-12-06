@@ -10,6 +10,30 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _realt = __webpack_require__(21);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DashboardSearcherActions = function DashboardSearcherActions() {
+  _classCallCheck(this, DashboardSearcherActions);
+
+  this.generate('changeValue', 'searcherClear');
+};
+
+exports.default = (0, _realt.createActions)(DashboardSearcherActions);
+
+/***/ }),
+
+/***/ 118:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _realt = __webpack_require__(21);
@@ -75,7 +99,7 @@ exports.default = (0, _realt.createActions)(DashboardPagesAlbumsActionsEdit);
 
 /***/ }),
 
-/***/ 177:
+/***/ 178:
 /***/ (function(module, exports, __webpack_require__) {
 
 var invariant = __webpack_require__(19);
@@ -337,30 +361,6 @@ function invariantMapOrSet(target, command) {
 
 /***/ }),
 
-/***/ 178:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _realt = __webpack_require__(21);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ModalsActions = function ModalsActions() {
-  _classCallCheck(this, ModalsActions);
-
-  this.generate('modalToggle', 'modalInit', 'modalClear');
-};
-
-exports.default = (0, _realt.createActions)(ModalsActions);
-
-/***/ }),
-
 /***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -375,7 +375,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _EditFormActions = __webpack_require__(117);
+var _EditFormActions = __webpack_require__(118);
 
 var _EditFormActions2 = _interopRequireDefault(_EditFormActions);
 
@@ -396,8 +396,8 @@ var DashboardPagesAlbumsActionsView = function () {
 
   _createClass(DashboardPagesAlbumsActionsView, [{
     key: 'albumsGet',
-    value: function albumsGet(userId, query) {
-      return _AlbumsSource2.default.getAlbums(userId, query);
+    value: function albumsGet(query) {
+      return _AlbumsSource2.default.getAlbums(query);
     }
   }, {
     key: 'albumEditFormOpen',
@@ -447,8 +447,8 @@ var _UrlConstants = __webpack_require__(116);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  getAlbums: function getAlbums(userId, query) {
-    return _AjaxService2.default.getRequest(_UrlConstants.ALBUM_URL + 'findByUser/' + userId, query);
+  getAlbums: function getAlbums(query) {
+    return _AjaxService2.default.getRequest(_UrlConstants.ALBUM_URL + 'findByUser', query);
   },
   createAlbum: function createAlbum(query) {
     return _AjaxService2.default.postRequest(_UrlConstants.ALBUM_URL + 'create', query);
@@ -545,7 +545,7 @@ var _realt = __webpack_require__(21);
 
 var _StatusConstants = __webpack_require__(22);
 
-var _LinksSource = __webpack_require__(315);
+var _LinksSource = __webpack_require__(314);
 
 var _LinksSource2 = _interopRequireDefault(_LinksSource);
 
@@ -643,35 +643,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _realt = __webpack_require__(21);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DashboardSearcherActions = function DashboardSearcherActions() {
-  _classCallCheck(this, DashboardSearcherActions);
-
-  this.generate('changeValue', 'searcherClear');
-};
-
-exports.default = (0, _realt.createActions)(DashboardSearcherActions);
-
-/***/ }),
-
-/***/ 314:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _realt = __webpack_require__(21);
 
-var _LinksSource = __webpack_require__(315);
+var _LinksSource = __webpack_require__(314);
 
 var _LinksSource2 = _interopRequireDefault(_LinksSource);
 
@@ -683,7 +659,7 @@ var DashboardPagesLinksActionsView = function () {
   function DashboardPagesLinksActionsView() {
     _classCallCheck(this, DashboardPagesLinksActionsView);
 
-    this.generate('filterChange');
+    this.generate('filterChange', 'albumNameSet', 'dataClear');
   }
 
   _createClass(DashboardPagesLinksActionsView, [{
@@ -705,7 +681,7 @@ exports.default = (0, _realt.createActions)(DashboardPagesLinksActionsView);
 
 /***/ }),
 
-/***/ 315:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -737,7 +713,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 366:
+/***/ 365:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -784,7 +760,7 @@ exports.default = DashboardPagesAlbumsCreateForm;
 
 /***/ }),
 
-/***/ 371:
+/***/ 370:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -794,7 +770,7 @@ var _AppService = __webpack_require__(217);
 
 var _AppService2 = _interopRequireDefault(_AppService);
 
-var _Reducers = __webpack_require__(529);
+var _Reducers = __webpack_require__(528);
 
 var _Reducers2 = _interopRequireDefault(_Reducers);
 
@@ -802,7 +778,7 @@ var _App = __webpack_require__(754);
 
 var _App2 = _interopRequireDefault(_App);
 
-__webpack_require__(940);
+__webpack_require__(941);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -814,7 +790,7 @@ new _AppService2.default({
 
 /***/ }),
 
-/***/ 529:
+/***/ 528:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -830,7 +806,7 @@ var _redux = __webpack_require__(50);
 
 var _reduxForm = __webpack_require__(30);
 
-var _ModalsReducer = __webpack_require__(695);
+var _ModalsReducer = __webpack_require__(694);
 
 var _ModalsReducer2 = _interopRequireDefault(_ModalsReducer);
 
@@ -856,7 +832,7 @@ exports.default = (0, _redux.combineReducers)(_extends({
 
 /***/ }),
 
-/***/ 695:
+/***/ 694:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -870,11 +846,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _immutabilityHelper = __webpack_require__(177);
+var _immutabilityHelper = __webpack_require__(178);
 
 var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
-var _ModalsActions = __webpack_require__(178);
+var _ModalsActions = __webpack_require__(710);
 
 var _ModalsActions2 = _interopRequireDefault(_ModalsActions);
 
@@ -924,6 +900,30 @@ exports.default = (0, _realt.createReducer)(ModalsReducer);
 
 /***/ }),
 
+/***/ 710:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _realt = __webpack_require__(21);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ModalsActions = function ModalsActions() {
+  _classCallCheck(this, ModalsActions);
+
+  this.generate('modalToggle', 'modalInit', 'modalClear');
+};
+
+exports.default = (0, _realt.createActions)(ModalsActions);
+
+/***/ }),
+
 /***/ 711:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -969,7 +969,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1058,11 +1058,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _SearcherActions = __webpack_require__(313);
+var _SearcherActions = __webpack_require__(117);
 
 var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
 
@@ -1150,13 +1150,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _immutabilityHelper = __webpack_require__(177);
+var _immutabilityHelper = __webpack_require__(178);
 
 var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1170,7 +1170,7 @@ var _CreateFormActions = __webpack_require__(182);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
-var _EditFormActions = __webpack_require__(117);
+var _EditFormActions = __webpack_require__(118);
 
 var _EditFormActions2 = _interopRequireDefault(_EditFormActions);
 
@@ -1202,20 +1202,22 @@ var DashboardPagesAlbumsViewReducer = function () {
           isSuccess = _ref.isSuccess,
           response = _ref.response;
 
-      if (!isSuccess) return _lodash2.default.assign({}, state, { status: status });
-
       if (state.filter.offset !== 0) {
+        if (!isSuccess) return (0, _immutabilityHelper2.default)(state, { $merge: { status: status } });
+
         return (0, _immutabilityHelper2.default)(state, {
-          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response.albums)), lastCount: response.albums.length }
+          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response)), lastCount: response.length }
         });
       }
+
+      if (!isSuccess) return (0, _immutabilityHelper2.default)(state, { $merge: { contentStatus: status } });
 
       return (0, _immutabilityHelper2.default)(state, {
         $merge: {
           contentStatus: _StatusConstants.STATUS_DEFAULT,
           status: _StatusConstants.STATUS_DEFAULT,
-          data: response.albums,
-          lastCount: response.albums.length
+          data: response,
+          lastCount: response.length
         }
       });
     }
@@ -1320,7 +1322,7 @@ var DashboardPagesAlbumsViewReducer = function () {
         filter: {
           limit: 25,
           offset: 0,
-          search: ''
+          query: ''
         }
       };
     }
@@ -1347,7 +1349,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1413,13 +1415,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(22);
 
-var _EditFormActions = __webpack_require__(117);
+var _EditFormActions = __webpack_require__(118);
 
 var _EditFormActions2 = _interopRequireDefault(_EditFormActions);
 
@@ -1507,19 +1509,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _immutabilityHelper = __webpack_require__(177);
+var _immutabilityHelper = __webpack_require__(178);
 
 var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _StatusConstants = __webpack_require__(22);
 
-var _ViewActions = __webpack_require__(314);
+var _ViewActions = __webpack_require__(313);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
@@ -1540,6 +1542,8 @@ var DashboardPagesLinksViewReducer = function () {
     this.bindAction(_ViewActions2.default.linksGet, this.handleLinksGet);
     this.bindAction(_ViewActions2.default.linkDelete, this.handleLinkDelete);
     this.bindAction(_ViewActions2.default.filterChange, this.handleFilterChange);
+    this.bindAction(_ViewActions2.default.dataClear, this.handleDataClear(this.initialState));
+    this.bindAction(_ViewActions2.default.albumNameSet, this.handleAlbumNameSet);
     this.bindAction(_CreateFormActions2.default.linkCreateCallback, this.handleLinkCreate);
   }
 
@@ -1554,7 +1558,7 @@ var DashboardPagesLinksViewReducer = function () {
 
       if (state.filter.offset !== 0) {
         return (0, _immutabilityHelper2.default)(state, {
-          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response.links)), lastCount: response.links.length }
+          $merge: { status: _StatusConstants.STATUS_DEFAULT, data: [].concat(_toConsumableArray(state.data), _toConsumableArray(response)), lastCount: response.length }
         });
       }
 
@@ -1562,8 +1566,8 @@ var DashboardPagesLinksViewReducer = function () {
         $merge: {
           contentStatus: _StatusConstants.STATUS_DEFAULT,
           status: _StatusConstants.STATUS_DEFAULT,
-          data: response.links,
-          lastCount: response.links.length
+          data: response,
+          lastCount: response.length
         }
       });
     }
@@ -1584,6 +1588,13 @@ var DashboardPagesLinksViewReducer = function () {
     value: function handleFilterChange(state, filter) {
       return (0, _immutabilityHelper2.default)(state, {
         filter: { $merge: _extends({}, filter) }
+      });
+    }
+  }, {
+    key: 'handleAlbumNameSet',
+    value: function handleAlbumNameSet(state, albumName) {
+      return (0, _immutabilityHelper2.default)(state, {
+        $merge: { albumName: albumName }
       });
     }
   }, {
@@ -1610,16 +1621,24 @@ var DashboardPagesLinksViewReducer = function () {
       });
     }
   }, {
+    key: 'handleDataClear',
+    value: function handleDataClear(state) {
+      return function () {
+        return _lodash2.default.assign({}, state);
+      };
+    }
+  }, {
     key: 'initialState',
     get: function get() {
       return {
         data: [],
         status: _StatusConstants.STATUS_DEFAULT,
         contentStatus: _StatusConstants.STATUS_LOADING,
+        albumName: '',
         filter: {
           limit: 25,
           offset: 0,
-          search: ''
+          query: ''
         }
       };
     }
@@ -1646,7 +1665,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _lodash = __webpack_require__(14);
+var _lodash = __webpack_require__(15);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -1726,7 +1745,7 @@ var _View3 = __webpack_require__(934);
 
 var _View4 = _interopRequireDefault(_View3);
 
-var _UserProvider = __webpack_require__(939);
+var _UserProvider = __webpack_require__(940);
 
 var _UserProvider2 = _interopRequireDefault(_UserProvider);
 
@@ -1824,6 +1843,8 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactRouterDom = __webpack_require__(260);
+
 var _WindowService = __webpack_require__(184);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
@@ -1832,7 +1853,7 @@ var _SessionService = __webpack_require__(185);
 
 var _SessionService2 = _interopRequireDefault(_SessionService);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Controls = __webpack_require__(13);
 
@@ -1867,12 +1888,19 @@ var DashboardHeader = function (_Component) {
   _createClass(DashboardHeader, [{
     key: 'render',
     value: function render() {
-      var displayName = this.props.displayName;
+      var _props = this.props,
+          displayName = _props.displayName,
+          albumName = _props.albumName;
 
-
+      console.log(this.props);
       return _react2.default.createElement(
         'div',
         { className: 'dashboard-header' },
+        _react2.default.createElement(
+          'div',
+          { className: 'album-title' },
+          albumName ? 'Album - ' + albumName : 'Albums'
+        ),
         _react2.default.createElement(_Searcher2.default, null),
         _react2.default.createElement(
           'div',
@@ -1903,10 +1931,20 @@ var DashboardHeader = function (_Component) {
 }(_react.Component);
 
 DashboardHeader.propTypes = {
+  albumName: _propTypes2.default.string,
   displayName: _propTypes2.default.string
 };
 
-exports.default = (0, _ConnectDecorators.connectToStore)({ name: 'user' })(DashboardHeader);
+var mapStateToProps = function mapStateToProps(_ref) {
+  var links = _ref.links,
+      user = _ref.user;
+  return {
+    albumName: links.albumName,
+    displayName: user.displayName
+  };
+};
+
+exports.default = (0, _ConnectDecorators.compose)((0, _ConnectDecorators.connectToStore)({ mapStateToProps: mapStateToProps }), _reactRouterDom.withRouter)(DashboardHeader);
 
 /***/ }),
 
@@ -1930,11 +1968,11 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Controls = __webpack_require__(13);
 
-var _SearcherActions = __webpack_require__(313);
+var _SearcherActions = __webpack_require__(117);
 
 var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
 
@@ -2001,13 +2039,13 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Helpers = __webpack_require__(94);
 
 var _Controls = __webpack_require__(13);
 
-var _SearcherActions = __webpack_require__(313);
+var _SearcherActions = __webpack_require__(117);
 
 var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
 
@@ -2058,7 +2096,7 @@ var DashboardPagesAlbumsView = function (_Component) {
     };
 
     _this.dataFetch = function (filter) {
-      return albumsGet(_this.props.userId, filter || _this.props.filter);
+      return albumsGet(filter || _this.props.filter);
     };
     _this.onAlbumOpen = function (id, name) {
       return function () {
@@ -2104,7 +2142,7 @@ var DashboardPagesAlbumsView = function (_Component) {
       if (prevOffset !== offset) this.dataFetch({ searcherValue: searcherValue, offset: offset, limit: limit });
       if (searcherValue !== prevSearcherValue) {
         this.onFilterChange({ offset: 0 });
-        this.dataFetch({ searcherValue: searcherValue, offset: 0, limit: limit });
+        this.dataFetch({ query: searcherValue, offset: 0, limit: limit });
       }
     }
   }, {
@@ -2182,7 +2220,6 @@ var mapStateToProps = function mapStateToProps(_ref3) {
       searcher = _ref3.searcher;
   return _extends({}, albums, {
     searcherValue: searcher.value,
-    userId: user.id,
     hiddenDownloadMore: albums.lastCount < albums.filter.limit
   });
 };
@@ -2217,7 +2254,7 @@ var _reactAddonsCssTransitionGroup = __webpack_require__(93);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Controls = __webpack_require__(13);
 
@@ -2225,7 +2262,7 @@ var _CreateFormActions = __webpack_require__(182);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
-var _Form = __webpack_require__(366);
+var _Form = __webpack_require__(365);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -2472,15 +2509,15 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Controls = __webpack_require__(13);
 
-var _EditFormActions = __webpack_require__(117);
+var _EditFormActions = __webpack_require__(118);
 
 var _EditFormActions2 = _interopRequireDefault(_EditFormActions);
 
-var _Form = __webpack_require__(366);
+var _Form = __webpack_require__(365);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -2598,25 +2635,25 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Helpers = __webpack_require__(94);
 
 var _Controls = __webpack_require__(13);
 
-var _SearcherActions = __webpack_require__(313);
+var _SearcherActions = __webpack_require__(117);
 
 var _SearcherActions2 = _interopRequireDefault(_SearcherActions);
 
-var _ViewActions = __webpack_require__(314);
+var _ViewActions = __webpack_require__(313);
 
 var _ViewActions2 = _interopRequireDefault(_ViewActions);
 
-var _CreateForm = __webpack_require__(936);
+var _CreateForm = __webpack_require__(935);
 
 var _CreateForm2 = _interopRequireDefault(_CreateForm);
 
-var _Link = __webpack_require__(938);
+var _Link = __webpack_require__(937);
 
 var _Link2 = _interopRequireDefault(_Link);
 
@@ -2642,15 +2679,19 @@ var DashboardPagesLinksView = function (_Component) {
         linksGet = _props$actions.linksGet,
         searcherClear = _props$actions.searcherClear,
         filterChange = _props$actions.filterChange,
+        dataClear = _props$actions.dataClear,
+        albumNameSet = _props$actions.albumNameSet,
         linkDelete = _props$actions.linkDelete,
         match = props.match;
 
 
     _this.componentWillUnmount = function () {
-      return searcherClear();
+      searcherClear();
+      dataClear();
     };
     _this.componentDidMount = function () {
-      return _this.dataFetch();
+      albumNameSet(match.params.albumName);
+      _this.dataFetch();
     };
 
     _this.dataFetch = function (filter) {
@@ -2690,7 +2731,7 @@ var DashboardPagesLinksView = function (_Component) {
       if (prevOffset !== offset) this.dataFetch({ searcherValue: searcherValue, offset: offset, limit: limit });
       if (searcherValue !== prevSearcherValue) {
         this.onFilterChange({ offset: 0 });
-        this.dataFetch({ searcherValue: searcherValue, offset: 0, limit: limit });
+        this.dataFetch({ query: searcherValue, offset: 0, limit: limit });
       }
     }
   }, {
@@ -2775,7 +2816,7 @@ exports.default = (0, _ConnectDecorators.connectToStore)({
 
 /***/ }),
 
-/***/ 936:
+/***/ 935:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2801,7 +2842,7 @@ var _reactAddonsCssTransitionGroup = __webpack_require__(93);
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Controls = __webpack_require__(13);
 
@@ -2809,7 +2850,7 @@ var _CreateFormActions = __webpack_require__(183);
 
 var _CreateFormActions2 = _interopRequireDefault(_CreateFormActions);
 
-var _Form = __webpack_require__(937);
+var _Form = __webpack_require__(936);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -2902,7 +2943,7 @@ exports.default = (0, _ConnectDecorators.compose)((0, _ConnectDecorators.connect
 
 /***/ }),
 
-/***/ 937:
+/***/ 936:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2965,7 +3006,7 @@ exports.default = DashboardPagesLinksCreateForm;
 
 /***/ }),
 
-/***/ 938:
+/***/ 937:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2983,16 +3024,26 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _colorHash = __webpack_require__(938);
+
+var _colorHash2 = _interopRequireDefault(_colorHash);
+
 var _FormUtils = __webpack_require__(57);
 
 var _FormUtils2 = _interopRequireDefault(_FormUtils);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var colorHash = new _colorHash2.default();
+
 var DashboardPagesLink = function DashboardPagesLink(_ref) {
   var id = _ref.id,
       url = _ref.url,
+      title = _ref.title,
       cover = _ref.cover,
+      favicon = _ref.favicon,
       onLinksDelete = _ref.onLinksDelete,
       onLinkOpen = _ref.onLinkOpen;
   return _react2.default.createElement(
@@ -3003,12 +3054,24 @@ var DashboardPagesLink = function DashboardPagesLink(_ref) {
       { className: 'card link', onClick: onLinkOpen(url) },
       _react2.default.createElement(
         'div',
-        { className: 'cover' },
-        _react2.default.createElement('img', { src: cover, alt: 'Sorry...' })
+        {
+          className: 'cover',
+          style: _defineProperty({}, cover ? 'background-image' : 'background-color', cover ? 'url(' + cover + ')' : colorHash.hex(title))
+        },
+        _react2.default.createElement(
+          'div',
+          { className: 'favicon' },
+          favicon ? _react2.default.createElement('img', { src: favicon, alt: '' }) : null
+        )
       ),
       _react2.default.createElement(
         'div',
-        { className: 'url' },
+        { className: 'title', title: title },
+        title
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'url', title: url },
         url
       ),
       _react2.default.createElement(
@@ -3027,6 +3090,8 @@ var DashboardPagesLink = function DashboardPagesLink(_ref) {
 DashboardPagesLink.propTypes = {
   id: _propTypes2.default.string,
   url: _propTypes2.default.string,
+  title: _propTypes2.default.string,
+  favicon: _propTypes2.default.string,
   cover: _propTypes2.default.string,
   onLinksDelete: _propTypes2.default.func,
   onLinkOpen: _propTypes2.default.func
@@ -3036,7 +3101,162 @@ exports.default = DashboardPagesLink;
 
 /***/ }),
 
+/***/ 938:
+/***/ (function(module, exports, __webpack_require__) {
+
+var BKDRHash = __webpack_require__(939);
+
+/**
+ * Convert RGB Array to HEX
+ *
+ * @param {Array} RGBArray - [R, G, B]
+ * @returns {String} 6 digits hex starting with #
+ */
+var RGB2HEX = function(RGBArray) {
+    var hex = '#';
+    RGBArray.forEach(function(value) {
+        if (value < 16) {
+            hex += 0;
+        }
+        hex += value.toString(16);
+    });
+    return hex;
+};
+
+/**
+ * Convert HSL to RGB
+ *
+ * @see {@link http://zh.wikipedia.org/wiki/HSL和HSV色彩空间} for further information.
+ * @param {Number} H Hue ∈ [0, 360)
+ * @param {Number} S Saturation ∈ [0, 1]
+ * @param {Number} L Lightness ∈ [0, 1]
+ * @returns {Array} R, G, B ∈ [0, 255]
+ */
+var HSL2RGB = function(H, S, L) {
+    H /= 360;
+
+    var q = L < 0.5 ? L * (1 + S) : L + S - L * S;
+    var p = 2 * L - q;
+
+    return [H + 1/3, H, H - 1/3].map(function(color) {
+        if(color < 0) {
+            color++;
+        }
+        if(color > 1) {
+            color--;
+        }
+        if(color < 1/6) {
+            color = p + (q - p) * 6 * color;
+        } else if(color < 0.5) {
+            color = q;
+        } else if(color < 2/3) {
+            color = p + (q - p) * 6 * (2/3 - color);
+        } else {
+            color = p;
+        }
+        return Math.round(color * 255);
+    });
+};
+
+/**
+ * Color Hash Class
+ *
+ * @class
+ */
+var ColorHash = function(options) {
+    options = options || {};
+
+    var LS = [options.lightness, options.saturation].map(function(param) {
+        param = param || [0.35, 0.5, 0.65]; // note that 3 is a prime
+        return Object.prototype.toString.call(param) === '[object Array]' ? param.concat() : [param];
+    });
+
+    this.L = LS[0];
+    this.S = LS[1];
+
+    this.hash = options.hash || BKDRHash;
+};
+
+/**
+ * Returns the hash in [h, s, l].
+ * Note that H ∈ [0, 360); S ∈ [0, 1]; L ∈ [0, 1];
+ *
+ * @param {String} str string to hash
+ * @returns {Array} [h, s, l]
+ */
+ColorHash.prototype.hsl = function(str) {
+    var H, S, L;
+    var hash = this.hash(str);
+
+    H = hash % 359; // note that 359 is a prime
+    hash = parseInt(hash / 360);
+    S = this.S[hash % this.S.length];
+    hash = parseInt(hash / this.S.length);
+    L = this.L[hash % this.L.length];
+
+    return [H, S, L];
+};
+
+/**
+ * Returns the hash in [r, g, b].
+ * Note that R, G, B ∈ [0, 255]
+ *
+ * @param {String} str string to hash
+ * @returns {Array} [r, g, b]
+ */
+ColorHash.prototype.rgb = function(str) {
+    var hsl = this.hsl(str);
+    return HSL2RGB.apply(this, hsl);
+};
+
+/**
+ * Returns the hash in hex
+ *
+ * @param {String} str string to hash
+ * @returns {String} hex with #
+ */
+ColorHash.prototype.hex = function(str) {
+    var rgb = this.rgb(str);
+    return RGB2HEX(rgb);
+};
+
+module.exports = ColorHash;
+
+
+/***/ }),
+
 /***/ 939:
+/***/ (function(module, exports) {
+
+/**
+ * BKDR Hash (modified version)
+ *
+ * @param {String} str string to hash
+ * @returns {Number}
+ */
+var BKDRHash = function(str) {
+    var seed = 131;
+    var seed2 = 137;
+    var hash = 0;
+    // make hash more sensitive for short string like 'a', 'b', 'c'
+    str += 'x';
+    // Note: Number.MAX_SAFE_INTEGER equals 9007199254740991
+    var MAX_SAFE_INTEGER = parseInt(9007199254740991 / seed2);
+    for(var i = 0; i < str.length; i++) {
+        if(hash > MAX_SAFE_INTEGER) {
+            hash = parseInt(hash / seed2);
+        }
+        hash = hash * seed + str.charCodeAt(i);
+    }
+    return hash;
+};
+
+module.exports = BKDRHash;
+
+
+/***/ }),
+
+/***/ 940:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3056,7 +3276,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _ConnectDecorators = __webpack_require__(31);
+var _ConnectDecorators = __webpack_require__(35);
 
 var _Helpers = __webpack_require__(94);
 
@@ -3107,18 +3327,19 @@ var SignIn = function (_Component) {
 
 SignIn.propTypes = {
   children: _propTypes2.default.node,
-  actions: _propTypes2.default.object
+  actions: _propTypes2.default.object,
+  status: _propTypes2.default.string
 };
 
 exports.default = (0, _ConnectDecorators.connectToStore)({ name: 'user', actions: _UserActions2.default })(SignIn);
 
 /***/ }),
 
-/***/ 940:
+/***/ 941:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[371]);
+},[370]);

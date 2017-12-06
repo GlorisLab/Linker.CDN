@@ -1,4 +1,4 @@
-.new-card .btn, .new-card .btn .material-icons {
+.new-card .btn, .new-card .btn .material-icons, .link .cover .favicon img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -57,9 +57,17 @@ tbody.collapse.in {
 .dashboard-header {
   height: 50px;
   background: white;
+  padding-left: 10px;
   box-shadow: 0 5px 20px rgba(36, 37, 38, 0.3);
   display: flex;
   justify-content: space-between; }
+  .dashboard-header .album-title {
+    line-height: 50px;
+    color: black;
+    font-size: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; }
 
 .user-info {
   position: relative;
@@ -249,7 +257,40 @@ tbody.collapse.in {
   max-height: 150px; }
 
 .link .cover {
-  height: 180px;
-  overflow: hidden; }
-  .link .cover img {
-    height: 180px; }
+  height: 160px;
+  overflow: hidden;
+  position: relative;
+  background-position: center center;
+  background-size: cover; }
+  .link .cover .favicon {
+    right: 0;
+    margin: 5px;
+    height: 34px;
+    padding: 10px;
+    width: 34px;
+    background-color: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    border-radius: 50%;
+    position: absolute;
+    top: 0; }
+    .link .cover .favicon img {
+      height: 16px; }
+
+.link .url {
+  height: 20px;
+  padding: 0 10px 5px;
+  white-space: nowrap;
+  width: 170px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  text-overflow: ellipsis;
+  text-align: center; }
+
+.link .title {
+  text-overflow: ellipsis;
+  max-height: 50px;
+  overflow: hidden;
+  margin: 10px;
+  font-weight: 600;
+  color: #000; }
