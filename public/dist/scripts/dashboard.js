@@ -994,10 +994,10 @@ var DashboardUserReducer = function () {
     key: 'handleUserGet',
     value: function handleUserGet(state, _ref) {
       var status = _ref.status,
-          isSuccess = _ref.isSuccess,
+          isLoading = _ref.isLoading,
           response = _ref.response;
 
-      if (!isSuccess) return _lodash2.default.assign({}, state, { status: status });
+      if (isLoading) return _lodash2.default.assign({}, state, { status: status });
 
       return _lodash2.default.assign({}, state, _extends({ status: _StatusConstants.STATUS_DEFAULT }, response));
     }
@@ -1892,7 +1892,8 @@ var DashboardHeader = function (_Component) {
           displayName = _props.displayName,
           albumName = _props.albumName;
 
-      console.log(this.props);
+      var login = displayName || 'Unauthorized';
+
       return _react2.default.createElement(
         'div',
         { className: 'dashboard-header' },
@@ -1911,15 +1912,15 @@ var DashboardHeader = function (_Component) {
               id: 'user-info-dropdown',
               title: _react2.default.createElement(
                 'span',
-                { title: displayName },
-                displayName
+                { title: login },
+                login
               ),
               pullRight: true
             },
             _react2.default.createElement(
               _Controls.MenuItem,
               { key: 'exit', onSelect: this.onLogout },
-              '\u0412\u044B\u0445\u043E\u0434'
+              displayName ? 'Exit' : 'Log in'
             )
           )
         )

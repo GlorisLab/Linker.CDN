@@ -128,14 +128,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _realt = __webpack_require__(21);
 
-var _WindowService = __webpack_require__(184);
-
-var _WindowService2 = _interopRequireDefault(_WindowService);
-
-var _SessionService = __webpack_require__(185);
-
-var _SessionService2 = _interopRequireDefault(_SessionService);
-
 var _StatusConstants = __webpack_require__(22);
 
 var _AccountSource = __webpack_require__(367);
@@ -155,18 +147,17 @@ var AccountRegistrationActions = function () {
 
   _createClass(AccountRegistrationActions, [{
     key: 'registration',
-    value: function registration(query) {
+    value: function registration(query, callback) {
       var _this = this;
 
       return function (dispatch) {
         _AccountSource2.default.registration(query).loading(function (result) {
           return dispatch(_this.registrationCallback(result));
         }).then(function (result) {
-          _SessionService2.default.signIn(result.response.token);
           dispatch(_this.registrationCallback(result));
 
           setTimeout(function () {
-            return _WindowService2.default.redirect('/Dashboard');
+            return callback();
           }, _StatusConstants.DELAY);
         }).catch(function (result) {
           dispatch(_this.registrationCallback(result));
@@ -502,7 +493,7 @@ var AuthorizationLayout = function (_Component) {
               transitionLeaveTimeout: 300
             },
             isSignIn && _react2.default.createElement(_SignIn2.default, null),
-            !isSignIn && _react2.default.createElement(_Registration2.default, null)
+            !isSignIn && _react2.default.createElement(_Registration2.default, { onToggleView: this.onToggleView })
           )
         )
       );
@@ -1085,7 +1076,7 @@ var SignIn = function (_Component) {
     var _this = _possibleConstructorReturn(this, (SignIn.__proto__ || Object.getPrototypeOf(SignIn)).call(this));
 
     _this.registration = function (data) {
-      return props.actions.registration(data);
+      return props.actions.registration(data, _this.props.onToggleView);
     };
     return _this;
   }
@@ -1093,7 +1084,6 @@ var SignIn = function (_Component) {
   _createClass(SignIn, [{
     key: 'render',
     value: function render() {
-      console.log(this.props);
       return _react2.default.createElement(
         'div',
         { className: 'authorization-form registration-form' },
@@ -1108,7 +1098,8 @@ var SignIn = function (_Component) {
 }(_react.Component);
 
 SignIn.propTypes = {
-  actions: _propTypes2.default.object
+  actions: _propTypes2.default.object,
+  onToggleView: _propTypes2.default.func
 };
 
 exports.default = (0, _ConnectDecorators.compose)((0, _ConnectDecorators.connectToStore)({ name: 'registration', actions: _RegistrationActions2.default }), (0, _ConnectDecorators.connectToForm)({ name: 'registration', validation: _ValidationConstants.registrationValidation }))(SignIn);
@@ -1152,7 +1143,7 @@ var RegistrationForm = function RegistrationForm(_ref) {
     props,
     _react2.default.createElement(_Form.Input, { name: 'email', label: 'Email*', icon: 'email', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
     _react2.default.createElement(_Form.Input, { name: 'displayName', label: 'Login', icon: 'face', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
-    _react2.default.createElement(_Form.Input, { name: 'password', label: 'Password*', icon: 'lock', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
+    _react2.default.createElement(_Form.Input, { name: 'password', label: 'Password*', type: 'password', icon: 'lock', maxLength: _SignInConstants.FIELD_MAX_LENGTH }),
     _react2.default.createElement(
       _Controls.ButtonsGroup,
       null,
